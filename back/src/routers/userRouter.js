@@ -74,6 +74,7 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+      console.log(req);
       const user_id = req.currentUserId;
       const currentUserInfo = await userAuthService.getUserInfo({
         user_id,
@@ -96,7 +97,9 @@ userAuthRouter.put(
   async function (req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
+      console.log('header!!!!!!!!!! ', req.headers);
       const user_id = req.params.id;
+      console.log()
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
