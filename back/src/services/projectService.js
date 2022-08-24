@@ -25,7 +25,7 @@ class ProjectService {
   }
 
   static async setProject({ project_id, toUpdate }) {
-    const project = await Project.getProjectByProjectId({ project_id });
+    let project = await Project.getProjectByProjectId({ project_id });
 
     if (toUpdate.title) {
       const fieldToUpdate = "title";
