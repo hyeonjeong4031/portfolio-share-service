@@ -1,8 +1,17 @@
 import { Schema, model } from  "mongoose";
 
 const EduSchema = new Schema(
-    {   
-        school: {
+  {   
+    user_id: {
+        type: String,
+        ref: "User",
+        required: true,
+      },
+    id: {
+        type: String,
+        required: true,
+      },
+    school: {
             type: String,
             required: true,   
         },
@@ -16,11 +25,6 @@ const EduSchema = new Schema(
         },
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
 
-        user_id: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-          },
       
         
 
