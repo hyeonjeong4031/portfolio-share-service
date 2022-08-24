@@ -1,6 +1,6 @@
 import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt"; //hash password 생성
-import { v4 as uuidv4 } from "uuid"; //unique id 생성
+import { v4 as uuidv4 } from "uuid"; //unique id 생성 -> 범용고유식별자(문자열)
 import jwt from "jsonwebtoken";
 
 class userAuthService {
