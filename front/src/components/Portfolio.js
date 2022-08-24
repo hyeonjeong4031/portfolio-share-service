@@ -62,7 +62,10 @@ function Portfolio() {
         </Col>
         <Col>
           <div style={{ textAlign: "center" }}>
-            <Projects portfolioOwnerId={portfolioOwner.id}></Projects>
+            <Projects
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            ></Projects>
           </div>
         </Col>
       </Row>
