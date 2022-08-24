@@ -6,11 +6,11 @@ const projectRouter = Router();
 
 //project list get
 projectRouter.get(
-  "/project/:userid",
-  // login_required,
+  "/project/read",
+  login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.params.userid;
+      const user_id = req.currentUserId;
       const projectList = await ProjectService.getProjects({ user_id });
       res.status(200).send(projectList);
     } catch (error) {
@@ -21,11 +21,11 @@ projectRouter.get(
 
 //project create
 projectRouter.put(
-  "/project/:id/create",
-  // login_required,
+  "/project/create",
+  login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.params.id;
+      const user_id = req.currentUserId;
       const title = req.body.title;
       const description = req.body.description;
       const startDate = req.body.startDate;
@@ -52,11 +52,11 @@ projectRouter.put(
 
 //project update
 projectRouter.put(
-  "/project/:projectid",
+  "/project/update",
   // login_required,
   async function (req, res, next) {
     try {
-      const project_id = req.params.projectid;
+      const project_id = req.body.projectId;
       const title = req.body.title ?? null;
       const description = req.body.description ?? null;
       const startDate = req.body.startDate ?? null;
@@ -81,6 +81,6 @@ projectRouter.put(
 );
 
 //project delete
-projectRouter.delete("/project/:projectid");
+projectRouter.delete("/project/delete");
 
 export { projectRouter };
