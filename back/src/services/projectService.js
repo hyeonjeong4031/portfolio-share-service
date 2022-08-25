@@ -24,8 +24,12 @@ class ProjectService {
     return projects;
   }
 
-  static async setProject({ project_id, toUpdate }) {
+  static async setProject({ project_id, toUpdate, user_id }) {
     let project = await Project.getProjectByProjectId({ project_id });
+
+    if (project.userId !== user_id) {
+      throw new Error("No authorization to update this project");
+    }
 
     if (toUpdate.title) {
       const fieldToUpdate = "title";
@@ -72,8 +76,14 @@ class ProjectService {
 
   //delete
   static async removeProject({ project_id, user_id }) {
-    const result = await Project.deleteProject({ project_id });
-    console.log(result);
+    const project = await Project.getProjectByProjectId({ project_id });
+
+    if (project.userId !== user_id) {
+      throw new Error("No authorization to delete this project");
+    }
+
+    const deleteResult = await Project.deleteProject({ project_id });
+    console.log(deleteResult);
 
     const projctList = await Project.getProjectsByUserId({ user_id });
 

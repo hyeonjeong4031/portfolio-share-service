@@ -35,9 +35,11 @@ class Project {
 
   //delete
   static async deleteProject({ project_id }) {
-    await ProjectModel.findOneAndDelete({ id: project_id });
+    await ProjectModel.findOneAndDelete({
+      id: project_id,
+    });
 
-    return "Deleting Project Success";
+    return "Deleting project success";
   }
 }
 

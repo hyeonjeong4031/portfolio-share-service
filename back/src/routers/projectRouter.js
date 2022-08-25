@@ -45,6 +45,7 @@ projectRouter.post("/project", login_required, async function (req, res, next) {
 //project update
 projectRouter.put("/project", login_required, async function (req, res, next) {
   try {
+    const user_id = req.currentUserId;
     const project_id = req.body.projectId;
     const title = req.body.title ?? null;
     const description = req.body.description ?? null;
@@ -56,6 +57,7 @@ projectRouter.put("/project", login_required, async function (req, res, next) {
     const updatedProject = await ProjectService.setProject({
       project_id,
       toUpdate,
+      user_id,
     });
 
     if (updatedProject.errorMessage) {
