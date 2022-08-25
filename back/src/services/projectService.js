@@ -70,7 +70,15 @@ class ProjectService {
     return project;
   }
 
-  //delete???
+  //delete
+  static async removeProject({ project_id, user_id }) {
+    const result = await Project.deleteProject({ project_id });
+    console.log(result);
+
+    const projctList = await Project.getProjectsByUserId({ user_id });
+
+    return projctList;
+  }
 }
 
 export { ProjectService };
