@@ -9,6 +9,9 @@ import { router } from "./routers/certiRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { projectRouter } from "./routers/projectRouter";
 
+//수상기록 라우터 이동을 위한 참조
+const award = require('./routers/awardRouter');
+
 const app = express();
 
 // CORS 에러 방지
@@ -38,7 +41,13 @@ app.use("/education", router);
 app.use("/certificate", router);
 >>>>>>> 8f2dd4870a284442f1054e33d43bdc03858e85b4
 
+<<<<<<< HEAD
 >>>>>>> 407b058bd5b17e740e9e4a917f09005a54783033
+=======
+//수상 라우터
+app.use('/award', award);
+
+>>>>>>> 8421f081f42179f77678d7cc821435755a29a2c6
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
 
