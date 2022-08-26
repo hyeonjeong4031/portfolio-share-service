@@ -1,7 +1,11 @@
 import cors from "cors";
 import express from "express";
 import { userAuthRouter } from "./routers/userRouter";
+<<<<<<< HEAD
 import { router } from "./routers/eduRouter";
+=======
+import { router } from "./routers/certiRouter";
+>>>>>>> 8f2dd4870a284442f1054e33d43bdc03858e85b4
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { projectRouter } from "./routers/projectRouter";
 
@@ -26,9 +30,13 @@ app.get("/", (req, res) => {
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter);
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use(projectRouter);
 =======
 app.use("/education", router);
+=======
+app.use("/certificate", router);
+>>>>>>> 8f2dd4870a284442f1054e33d43bdc03858e85b4
 
 >>>>>>> 407b058bd5b17e740e9e4a917f09005a54783033
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
