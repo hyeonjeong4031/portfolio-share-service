@@ -1,3 +1,5 @@
+// award의 "편집" 관련. AwardEditForm, AwardCard 이용.
+
 import React, { useState } from "react";
 import AwardCard from "./AwardCard";
 import AwardEditForm from "./AwardEditForm";

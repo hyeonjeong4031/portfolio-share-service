@@ -9,7 +9,7 @@ function AwardCard({ award, isEditable, setIsEditing }) {
           <br />
           <span className="text-muted">{award.description}</span>
         </Col>
-        {isEditable && (
+        {(
           <Col xs lg="1">
             <Button
               variant="outline-info"

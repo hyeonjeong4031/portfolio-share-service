@@ -6,10 +6,6 @@ import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
 import Awards from "./award/Awards.js"
-import Award from "./award/Award.js"
-import AwardCard from "./award/AwardCard.js"
-import AwardEditForm from "./award/AwardEditForm.js"
-import AwardAddForm from "./award/AwardAddForm.js"
 
 
 function Portfolio() {
@@ -68,7 +64,7 @@ function Portfolio() {
         </Col>
         <Col>
 
-          <div style={{ textAlign: "center" }}>
+          <div>
             <div class = "col">
               <Awards />        
             </div>
