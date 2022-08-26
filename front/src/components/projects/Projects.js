@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Col, Row, Button } from "react-bootstrap";
 import Project from "./Project";
 import ProjectAddForm from "./ProjectAddForm";
+import * as Api from "../../api";
 
 function Projects({ portfolioOwnerId, isEditable }) {
   const [projects, setProjects] = useState([
@@ -20,6 +21,11 @@ function Projects({ portfolioOwnerId, isEditable }) {
       endDate: "2021-08-23",
     },
   ]);
+
+  useEffect(() => {
+    Api.get("project", portfolioOwnerId).then((res) => setProjects(res.data));
+  }, [portfolioOwnerId]);
+
   const [isAdding, setIsAdding] = useState(false);
 
   return (

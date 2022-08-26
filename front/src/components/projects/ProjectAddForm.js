@@ -11,15 +11,6 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
   const [errMsg, setErrMsg] = useState("");
 
-  // const [title, setTitle] = useState("");
-  // const [subscription, setSubscription] = useState("");
-  // const [startDate, setStartDate] = useState(
-  //   new Date().toISOString().substring(0, 10)
-  // );
-  // const [endDate, setEndDate] = useState(
-  //   new Date().toISOString().substring(0, 10)
-  // );
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
@@ -31,6 +22,16 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
       setErrMsg("시작 날짜는 종료 날짜 이전이어야 합니다.");
     } else {
       setErrMsg("");
+      try {
+        const bodyData = JSON.stringify(formData);
+        await Api.post("project", bodyData);
+
+        const res = await Api.get("project", portfolioOwnerId);
+        setProjects(res.data);
+        setIsAdding(false);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

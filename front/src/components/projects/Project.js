@@ -7,7 +7,11 @@ function Project({ key, project, isEditable, setProjects }) {
 
   if (isEditing) {
     return (
-      <ProjectEditForm currentProject={project} setIsEditing={setIsEditing} />
+      <ProjectEditForm
+        currentProject={project}
+        setProjects={setProjects}
+        setIsEditing={setIsEditing}
+      />
     );
   }
   if (!isEditing) {
