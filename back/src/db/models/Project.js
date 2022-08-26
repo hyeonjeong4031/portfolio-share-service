@@ -1,7 +1,7 @@
 import { ProjectModel } from "../schemas/project";
 
 class Project {
-  //create populate??
+  //create
   static async createProject({ newProject }) {
     const createdProject = await ProjectModel.create(newProject);
 
@@ -23,7 +23,7 @@ class Project {
   static async updateProject({ project_id, fieldToUpdate, newValue }) {
     const filter = { id: project_id };
     const update = { [fieldToUpdate]: newValue };
-    const option = { returnOriginal: false }; //??
+    const option = { returnOriginal: false };
 
     const updatedProject = await ProjectModel.findOneAndUpdate(
       filter,
@@ -35,9 +35,11 @@ class Project {
 
   //delete
   static async deleteProject({ project_id }) {
-    await ProjectModel.findOneAndDelete({ id: project_id });
+    await ProjectModel.findOneAndDelete({
+      id: project_id,
+    });
 
-    return "Delete Project Success";
+    return "Deleting project success";
   }
 }
 
