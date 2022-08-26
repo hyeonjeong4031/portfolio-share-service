@@ -11,7 +11,8 @@ function Project({ project, isEditable, setIsEditing }) {
           <span className="text-muted">{project.description}</span>
           <br />
           <span className="text-muted">
-            {project.startDate} ~ {project.endDate}
+            {project.startDate.substring(0, 10)} ~{" "}
+            {project.endDate.substring(0, 10)}
           </span>
         </Col>
         {isEditable && (

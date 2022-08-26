@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Alert, Form, Col, Row, Button } from "react-bootstrap";
+import * as Api from "../../api";
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   const [formData, setFormData] = useState({
     title: "",
-    subscription: "",
+    description: "",
     startDate: new Date().toISOString().substring(0, 10),
     endDate: new Date().toISOString().substring(0, 10),
   });
@@ -16,15 +17,14 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     console.log(formData);
     if (!formData.title) {
       setErrMsg("프로젝트 제목을 입력해 주세요.");
-    } else if (!formData.subscription) {
+    } else if (!formData.description) {
       setErrMsg("프로젝트 상세 내역을 입력해 주세요.");
     } else if (formData.startDate > formData.endDate) {
       setErrMsg("시작 날짜는 종료 날짜 이전이어야 합니다.");
     } else {
       setErrMsg("");
       try {
-        const bodyData = JSON.stringify(formData);
-        await Api.post("project", bodyData);
+        await Api.post("project", formData);
 
         const res = await Api.get("project", portfolioOwnerId);
         setProjects(res.data);
@@ -52,11 +52,11 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
           onChange={handleChange}
         />
       </Form.Group>
-      <Form.Group className="mt-3" controlId="projectAddSubscription">
+      <Form.Group className="mt-3" controlId="projectAddDescription">
         <Form.Control
           type="text"
-          name="subscription"
-          value={formData.subscription}
+          name="description"
+          value={formData.description}
           placeholder="상세 내역"
           onChange={handleChange}
         />
