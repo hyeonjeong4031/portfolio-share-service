@@ -61,7 +61,7 @@ class ProjectService {
       });
     }
 
-    if (toUpdate.endtDate) {
+    if (toUpdate.endDate) {
       const fieldToUpdate = "endDate";
       const newValue = toUpdate.endDate;
       project = await Project.updateProject({
