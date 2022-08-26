@@ -7,9 +7,9 @@ class Edu {
     return createdNewEdu;
  }
 
- //학력 목록 중에서 Id에 해당하는 학력 찾기
- static async findByEduId({Id}){
-     const edu =await EduModel.findOne({Id});
+ //학력 목록 중에서 user_id에 해당하는 학력 찾기
+ static async findByEduId({user_id}){
+     const edu =await EduModel.findOne({user_id});
      return edu
  }
 
@@ -36,6 +36,13 @@ class Edu {
             console.log(updateEdu)
             return updateEdu;
 
+}
+
+static async deleteEdu({id}){
+    console.log(EduModel.find({id}))
+    const edulist =await EduModel.deleteOne({id: id});
+    console.log(edulist)
+    return edulist
 }
 
 

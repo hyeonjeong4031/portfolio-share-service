@@ -55,26 +55,39 @@ class eduService{
     
     //3. 학력정보 수정
     static async editEdu({user_id, toUpdate}){
-        let user = await Edu.findByEduId({user_id});
-        const id = user.id
+        let user = await Edu.findAllEdu(user_id);
+        const id = toUpdate.id
         console.log(user)
-        console.log("!!!!!!")
-        console.log("수정 전:", user.id)
-        console.log("수정할 내용:", toUpdate.school)
+        // console.log("user목록의 userid추출하고싶다", user[0].user_id)
+        // console.log("req로 받은 userid",user_id) 
+        // console.log("!!!!!!")
+        // console.log("수정 전:", )
+        // console.log("수정할 내용:", toUpdate.id)
        
-        if(!user){
+        if(user[0].user_id !== user_id){
             const errorMessage = "학력수정에러-유저를 찾을 수 없습니다."
             return { errorMessage };
             
         }
+//         console.log("foreach 결과")
+        
+//         user.map(id => id.id) toUpdate.id
+//         // id 비교해서 일치하는 아이디가 있으면 true를 return 
+
+            const post = await Edu.findByEduId({user_id});
+            console.log("post",post)
+            console.log("post유저아이디",post.user_id)
+            console.log("req유저아이디",user_id)
+//  if(user.map(id => console.log(id.id)) !== toUpdate.id){
+//     const errorMessage = "학력수정에러-edu list를 찾을 수 없습니다."
+//     return { errorMessage };
+//         }
 
         if( toUpdate.school){
             const fieldToUpdate = "school";
             const newValue = toUpdate.school;
             user = await Edu.updateEdu({id, fieldToUpdate, newValue})
-            console.log("리턴 되나?")
         }
-
         console.log("!!!!!!")
         console.log("수정 후 내용:", user.school)
         if( toUpdate.major){
@@ -90,10 +103,21 @@ class eduService{
         return user;
     
     }  
-////DB에 수정내용 저장이 안되니까 그거 수정하기
+
+// //4.삭제
+// static async deleteEdu({id, user_id}){
+//     let user = await Edu.findAllEdu(user_id);
+// console.log(user.user_id)
+//     if(user_id !==user.user_id){
+//         const errorMessage  = "본인의 포스트가 아님"
+//         return {errorMessage}
+//     }
 
 
 }
+
+
+
 
 
 export {eduService}
