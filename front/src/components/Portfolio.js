@@ -4,7 +4,11 @@ import { Container, Col, Row } from "react-bootstrap";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
+<<<<<<< HEAD
 import Projects from "./projects/Projects";
+=======
+import Educations from "./education/Educations";
+>>>>>>> 407b058bd5b17e740e9e4a917f09005a54783033
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -61,12 +65,19 @@ function Portfolio() {
           />
         </Col>
         <Col>
+<<<<<<< HEAD
           <div style={{ textAlign: "center" }}>
             <Projects
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             ></Projects>
           </div>
+=======
+          <Educations
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+>>>>>>> 407b058bd5b17e740e9e4a917f09005a54783033
         </Col>
       </Row>
     </Container>
