@@ -19,7 +19,7 @@ const EducationAddForm = ({ portfolioOwnerId, setEducations, setIsAdding }) => {
       position,
     });
 
-    const res = await Api.get("educationlist", user_id);
+    const res = await Api.get("education/educationlist", user_id);
     setEducations(res.data);
     setIsAdding(false);
   };
