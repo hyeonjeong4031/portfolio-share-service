@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "./models/User";
-<<<<<<< HEAD
 import { Certificate } from "./models/Certi";
-=======
-import {Award} from './models/Award';
->>>>>>> 8421f081f42179f77678d7cc821435755a29a2c6
+import { Award } from "./models/Award";
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -20,9 +17,5 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 );
 
-<<<<<<< HEAD
-export { User };
-export {Certificate}
-=======
+export { Certificate };
 export { User, Award };
->>>>>>> 8421f081f42179f77678d7cc821435755a29a2c6

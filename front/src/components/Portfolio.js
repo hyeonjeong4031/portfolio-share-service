@@ -1,24 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-<<<<<<< HEAD
-import { Container, Col, Row } from "react-bootstrap";
-import { UserStateContext } from "../App";
-import * as Api from "../api";
-import User from "./user/User";
-<<<<<<< HEAD
-import Projects from "./projects/Projects";
-=======
-import Educations from "./education/Educations";
->>>>>>> 407b058bd5b17e740e9e4a917f09005a54783033
-=======
 import { Container, Col, Row, Button } from "react-bootstrap";
-
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
-import Awards from "./award/Awards.js"
-
->>>>>>> 8421f081f42179f77678d7cc821435755a29a2c6
+import Projects from "./projects/Projects";
+import Educations from "./education/Educations";
+import Awards from "./award/Awards.js";
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -75,27 +63,24 @@ function Portfolio() {
           />
         </Col>
         <Col>
-<<<<<<< HEAD
-<<<<<<< HEAD
           <div style={{ textAlign: "center" }}>
             <Projects
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             ></Projects>
-=======
-
-          <div>
-            <div class = "col">
-              <Awards />        
-            </div>
->>>>>>> 8421f081f42179f77678d7cc821435755a29a2c6
           </div>
-=======
+          <div>
+            <div class="col">
+              <Awards
+                portfolioOwnerId={portfolioOwner.id}
+                isEditable={portfolioOwner.id === userState.user?.id}
+              />
+            </div>
+          </div>
           <Educations
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
->>>>>>> 407b058bd5b17e740e9e4a917f09005a54783033
         </Col>
       </Row>
     </Container>
