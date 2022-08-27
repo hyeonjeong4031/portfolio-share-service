@@ -20,6 +20,7 @@
   "homepage": "https://github.com/",
   "dependencies": {
     "@sindresorhus/is": "^4.2.0",
+    "babel": "^6.23.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -33,7 +34,7 @@
   "devDependencies": {
     "@babel/cli": "^7.17.0",
     "@babel/core": "^7.17.0",
-    "@babel/node": "^7.16.8",
+    "@babel/node": "^7.18.10",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.4",
     "dotenv": "^16.0.0",
