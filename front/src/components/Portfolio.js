@@ -5,7 +5,7 @@ import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
 import Projects from "./projects/Projects";
-import Educations from "./education/Educations";
+import Educations from "./educations/Educations";
 import Awards from "./award/Awards.js";
 
 function Portfolio() {

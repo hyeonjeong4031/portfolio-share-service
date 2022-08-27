@@ -10,16 +10,13 @@ const EducationAddForm = ({ portfolioOwnerId, setEducations, setIsAdding }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user_id = portfolioOwnerId;
-
     await Api.post("education/create", {
-      user_id,
       school,
       major,
       position,
     });
 
-    const res = await Api.get("education/educationlist", user_id);
+    const res = await Api.get("education/educationlist");
     setEducations(res.data);
     setIsAdding(false);
   };
