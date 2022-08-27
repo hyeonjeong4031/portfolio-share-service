@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const CertiSchena = new Schema ({
+const CertiSchema = new Schema ({
     user_id:{
         type: String,
         required: true,
@@ -29,6 +29,6 @@ const CertiSchena = new Schema ({
     }
 },{timestamps: true})
 
-const certiModel = model("certi", CertiSchena);
+const certiModel = model("certi", CertiSchema);
 
 export { certiModel } 

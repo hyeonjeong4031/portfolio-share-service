@@ -33,16 +33,77 @@ class certiService{
 
 
     //2. get
-    static async getCerti({user_id}){
+    static async getCertificate({user_id}){
         if(!user_id){
             return "user_id is required"
         }
-        const getCertilist = Certificate.getCerti({user_id})
+        const getCertilist = await Certificate.getCerti({user_id})
         console.log("????:" ,getCertilist)
+        console.log("?!!!" ,typeof(getCertilist))
+
         return getCertilist
     }
 
     //3. edit
+    //user_id랑 게시물의 user_id, id랑 게시글의 id 확인
+    static async editCerti({user_id, toUpdate, id}){
+       const CertiData1 = await Certificate.getCerti({user_id})
+       const CertiData2 = await Certificate.getCertiId({id})
+       //     return
+       // }
+       let editCerti = await CertiData2[0]
+       console.log("serviceData:",toUpdate)
+       console.log("DATA1,",CertiData1[0].user_id)
+       console.log(" DATA2:",CertiData2[0].id)
+       console.log("id:",id)
+
+       if(user_id !== CertiData1[0].user_id){
+           const errorMessage = "User_id does not match "
+           return errorMessage
+       }
+       if(id !== CertiData2[0].id){
+           const errorMessage = "Certificate_id does not match "
+           return errorMessage
+       }
+       
+        if(toUpdate.title){
+            const fieldToUpdate = "title";
+            const newValue = toUpdate.title;
+            editCerti = await Certificate.editCerti({
+                id,
+                fieldToUpdate,
+                newValue
+            })
+        }
+        if(toUpdate.description){
+            const fieldToUpdate = "description";
+            const newValue = toUpdate.description;
+            editCerti = await Certificate.editCerti({
+                id,
+                fieldToUpdate,
+                newValue
+            })
+        }
+        if(toUpdate.when_date){
+            const fieldToUpdate = "when_data";
+            const newValue = toUpdate.when_date;
+            editCerti = await Certificate.editCerti({
+                id,
+                fieldToUpdate,
+                newValue
+            })
+        }
+        console.log(editCerti)
+        return editCerti
+
+    
+
+
+    }
+
+
+
+
     //4. delete
 
 
