@@ -6,30 +6,37 @@ import EducationAddForm from "./EducationAddForm";
 
 const Educations = ({ portfolioOwnerId, isEditable }) => {
   const [educations, setEducations] = useState([]);
-  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    Api.get("educationlist", portfolioOwnerId).then((res) =>
+    Api.get("education/educationlist", portfolioOwnerId).then((res) =>
       setEducations(res.data)
     );
   }, [portfolioOwnerId]);
+
+  const [isAdding, setIsAdding] = useState(false);
 
   return (
     <Card>
       <Card.Body>
         <Card.Title>학력</Card.Title>
-        {educations.map((education) => (
-          <Education
-            key={education.id}
-            education={education}
-            setEducations={setEducations}
-            isEditable={isEditable}
-          />
-        ))}
+        <Col>
+          {educations.map((education) => {
+            return (
+              <Education
+                key={education.id}
+                education={education}
+                setEducations={setEducations}
+                isEditable={isEditable}
+              />
+            );
+          })}
+        </Col>
         {isEditable && (
-          <Row className="mt-3 text-center mb-4">
+          <Row className="mt-3 mb-4 text-center">
             <Col>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
+              <Button varient="primary" onClick={() => setIsAdding(true)}>
+                +
+              </Button>
             </Col>
           </Row>
         )}
