@@ -27,6 +27,12 @@ class Award {
     console.log(fixedAward)
     return fixedAward
   }
+  static async deleteOneAward({awardID}){
+    console.log('deleteOne 작동')
+    const deleteAward = await AwardModel.deleteOne({id:awardID})
+    console.log(deleteAward)
+    return deleteAward
+  }
 }
 
 export { Award };

@@ -71,6 +71,14 @@ class awardService{
             data : fixedData})
         return fixedAward
     }
+
+    static async deleteAward({awardID}){
+        console.log('삭제 요청 발생')
+        const deletedData = await Award.deleteOneAward({
+            awardID : awardID
+        })
+        return deletedData
+    }
 }
 
 export { awardService };

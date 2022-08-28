@@ -104,6 +104,43 @@ router.put('/fix/:awardID', login_required, async(req,res,next)=>{
     }
 })
 
+router.delete('/delete/:awardID', login_required, async(req,res,next)=>{
+    try{
+        //해당 아이디를 찾기 위해서 기존 아이디의 소유자를 착음
+        console.log('id를 찾기 시작했습니다')
+        const awardID = req.params.awardID;
+        const currentUser = req.currentUserId;
+        const awardThis = await awardService.readOneAward({awardID})
+        //해당 상의 소유자와 현재 접속자가 일치하면 해당 글을 보여주고 아니면 에러 메시지 전송
+        if (awardThis.errorMessage) {
+            throw new Error(awardThis.errorMessage);
+          }
+        //에러가 없는 상태 , else문 쓰려다가 그냥 안씀
+        if(currentUser != awardThis.writer_id){
+            const errorMessage="권한이 없습니다"
+            throw new Error(errorMessage);
+        }
+        //해당 글의 작성자가 사용자랑 일치 
+        
+        const fixedAward = await awardService.deleteAward({
+            awardID : awardID
+        })
+        const message = {
+            message : "삭제에 성공했습니다"}
+        if(fixedAward.deletedCount == 0){
+            message = {
+                message : "에러가 발생해 정보 삭제에 실패했습니다"}
+        }
+        console.log(fixedAward)
+        
+        res.status(200).send(message)
+    }
+    catch(error){
+        //에러처리 라우터에 라우터를 넘겨줌
+        next(error);
+    }
+})
+
 
 
 
