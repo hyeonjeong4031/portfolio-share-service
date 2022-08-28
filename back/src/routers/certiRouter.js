@@ -10,7 +10,7 @@ certiRouter.post("/create", login_required, async (req, res, next) => {
     const description = req.body.description;
     const date = req.body.when_date;
     const user_id = req.currentUserId;
-    console.log(user_id);
+    // console.log(user_id);
 
     const newCerti = await certiService.addCerti({
       user_id,
@@ -31,7 +31,7 @@ certiRouter.get("/certificatelist", login_required, async (req, res, next) => {
     const user_id = req.currentUserId;
 
     const certiList = await certiService.getCertificate({ user_id });
-    console.log("Hey",certiList)
+    // console.log("Hey",certiList)
     res.status(200).json(certiList);
   } catch (error) {
     next(error);
@@ -65,6 +65,14 @@ certiRouter.put("/edit", login_required, async (req, res, next) => {
 //4. 자격증 정보 삭제
 certiRouter.delete("/delete", login_required, async (req, res, next) => {
   try {
+    const id = req.body.id;
+    const user_id =req.currentUserId
+    // console.log("user_id:",user_id, )
+    // console.log("id:",id, )
+
+    const deleteResult = await certiService.deleteCerti({user_id, id})
+    // res.status(200).json("hello")
+    res.status(200).json(deleteResult);
   } catch (error) {
     next(error);
   }

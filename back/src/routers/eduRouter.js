@@ -16,8 +16,8 @@ eduRouter.post("/create", login_required, async function (req, res, next) {
     const school = req.body.school;
     const major = req.body.major;
     const position = req.body.position;
-    console.log(req.body);
-    console.log(`${school}재학중`);
+    // console.log(req.body);
+    // console.log(`${school}재학중`);
     const newEdu = await eduService.addEdu({
       user_id,
       school,
@@ -44,8 +44,8 @@ eduRouter.get(
   login_required,
   async function (req, res, next) {
     try {
-      console.log(req.body.user_id);
-      console.log(req.currentUserId);
+      // console.log(req.body.user_id);
+      // console.log(req.currentUserId);
       const user_id = req.currentUserId;
       // 네트워크 타인 페이지 들어가서 req.body 로
 
@@ -65,17 +65,17 @@ eduRouter.put("/:id", login_required, async function (req, res, next) {
     const user_id = req.currentUserId;
 
     const id = req.body.id;
-    console.log(user_id);
+    // console.log(user_id);
     // console.log(id)
     let school = req.body.school ?? null;
     let major = req.body.major ?? null;
     let position = req.body.position ?? null;
     // ?? 앞 포지션 내용있으면 앞의값, 앞 포지션 내용 없으면 뒤의 값
     let toUpdate = { school, major, position, id };
-    console.log("여기까지 오나?");
+    // console.log("여기까지 오나?");
 
     const updateEdu = await eduService.editEdu({ user_id, toUpdate });
-    console.log("여기까지 오면 성공이지!!");
+    // console.log("여기까지 오면 성공이지!!");
 
     if (updateEdu.errorMessage) {
       throw new Error(updateEdu.errorMessage);
@@ -97,7 +97,7 @@ eduRouter.delete(
       const id = req.body.id;
       await Edu.deleteEdu({ id, user_id });
       //list는 delete 후 남은 list를 res해주면 된다
-      console.log("hello!!!");
+      // console.log("hello!!!");
       const edu = await eduService.getEduinfo({ user_id });
 
       res.status(200).json(edu);
@@ -119,8 +119,8 @@ eduRouter.post(
       const school = req.body.school;
       const major = req.body.major;
       const position = req.body.position;
-      console.log(req.body);
-      console.log(`${school}재학중`);
+      // console.log(req.body);
+      // console.log(`${school}재학중`);
       const newEdu = await eduService.addEdu({
         user_id,
         school,
@@ -144,8 +144,8 @@ eduRouter.get(
   login_required,
   async function (req, res, next) {
     try {
-      console.log(req.body.user_id);
-      console.log(req.currentUserId);
+      // console.log(req.body.user_id);
+      // console.log(req.currentUserId);
       const user_id = req.body.user_id || req.currentUserId;
       // 네트워크 타인 페이지 들어가서 req.body 로
 
@@ -171,10 +171,10 @@ eduRouter.put("/network/:id", login_required, async function (req, res, next) {
     let position = req.body.position ?? null;
     // ?? 앞 포지션 내용있으면 앞의값, 앞 포지션 내용 없으면 뒤의 값
     let toUpdate = { school, major, position, id };
-    console.log("여기까지 오나?");
+    // console.log("여기까지 오나?");
 
     const updateEdu = await eduService.editEdu({ user_id, toUpdate });
-    console.log("여기까지 오면 성공이지!!");
+    // console.log("여기까지 오면 성공이지!!");
 
     if (updateEdu.errorMessage) {
       throw new Error(updateEdu.errorMessage);
@@ -196,7 +196,7 @@ eduRouter.delete(
       const id = req.body.id;
       await Edu.deleteEdu({ id, user_id });
       //list는 delete 후 남은 list를 res해주면 된다
-      console.log("hello!!!");
+      // console.log("hello!!!");
       const edu = await eduService.getEduinfo({ user_id });
 
       res.status(200).json(edu);

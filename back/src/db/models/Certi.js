@@ -35,7 +35,12 @@ class Certificate{
     }
 
 
+static async deleteCerti({id}){
+    const deleteOne = await certiModel.deleteOne({id}) 
+    // console.log("🐰")
+    return deleteOne
 
+}
 
 
 

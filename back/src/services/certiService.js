@@ -38,8 +38,8 @@ class certiService{
             return "user_id is required"
         }
         const getCertilist = await Certificate.getCerti({user_id})
-        console.log("????:" ,getCertilist)
-        console.log("?!!!" ,typeof(getCertilist))
+        // console.log("????:" ,getCertilist)
+        // console.log("?!!!" ,typeof(getCertilist))
 
         return getCertilist
     }
@@ -52,10 +52,10 @@ class certiService{
        //     return
        // }
        let editCerti = await CertiData2[0]
-       console.log("serviceData:",toUpdate)
-       console.log("DATA1,",CertiData1[0].user_id)
-       console.log(" DATA2:",CertiData2[0].id)
-       console.log("id:",id)
+    //    console.log("serviceData:",toUpdate)
+    //    console.log("DATA1,",CertiData1[0].user_id)
+    //    console.log(" DATA2:",CertiData2[0].id)
+    //    console.log("id:",id)
 
        if(user_id !== CertiData1[0].user_id){
            const errorMessage = "User_id does not match "
@@ -93,18 +93,32 @@ class certiService{
                 newValue
             })
         }
-        console.log(editCerti)
+        // console.log(editCerti)
         return editCerti
 
     
 
 
     }
-
-
-
-
     //4. delete
+    static async deleteCerti({id, user_id}){
+        const getpost = await Certificate.getCertiId({id})
+        // console.log("!!!!!!!!!!")
+        // console.log("해당 포스트의 유저id", getpost[0].user_id)
+        // console.log("user_id", user_id)
+        if(user_id !== getpost[0].user_id){
+            const errorMessage = "user_id does not match"
+            return errorMessage
+        }
+        await Certificate.deleteCerti({id})
+
+        const deleteCerti = await Certificate.getCerti({user_id})
+        return deleteCerti
+    }
+
+
+
+    
 
 
 };

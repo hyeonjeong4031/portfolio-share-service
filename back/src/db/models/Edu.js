@@ -21,9 +21,9 @@ class Edu {
 
  // update 할 때 해당하는 id를 하나 찾고,내용적으면 업데이트, option은 수정 취소버튼?? 
  static async updateEdu({id, fieldToUpdate, newValue}){
-    console.log("여기는 왔다!!!")
-    console.log(id)
-    console.log(fieldToUpdate,newValue)
+    // console.log("여기는 왔다!!!")
+    // console.log(id)
+    // console.log(fieldToUpdate,newValue)
     const filter = { id: id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
@@ -33,15 +33,15 @@ class Edu {
             update,
             option
             );
-            console.log(updateEdu)
+            // console.log(updateEdu)
             return updateEdu;
 
 }
 
 static async deleteEdu({id}){
-    console.log(EduModel.find({id}))
+    // console.log(EduModel.find({id}))
     const edulist =await EduModel.deleteOne({id: id});
-    console.log(edulist)
+    // console.log(edulist)
     return edulist
 }
 
