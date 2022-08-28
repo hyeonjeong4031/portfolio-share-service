@@ -43,7 +43,7 @@ static async deleteEdu({id}){
     const edulist =await EduModel.deleteOne({id: id});
     // console.log(edulist)
     return edulist
-}
+} 
 
 
 }

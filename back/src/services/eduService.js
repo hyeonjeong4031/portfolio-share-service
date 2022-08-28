@@ -106,7 +106,7 @@ class eduService{
 
 // //4.삭제
 // static async deleteEdu({id, user_id}){
-//     let user = await Edu.findAllEdu(user_id);
+//     let user = await Edu.findAllEdu(user_id); 
 // console.log(user.user_id)
 //     if(user_id !==user.user_id){
 //         const errorMessage  = "본인의 포스트가 아님"

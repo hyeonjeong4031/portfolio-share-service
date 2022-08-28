@@ -188,7 +188,7 @@ eduRouter.put("/network/:id", login_required, async function (req, res, next) {
 
 //4. 삭제 기능 구현
 eduRouter.delete(
-  "/delete/network/:id",
+  "/delete/network/:id", 
   login_required,
   async function (req, res, next) {
     try {

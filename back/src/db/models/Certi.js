@@ -32,7 +32,7 @@ class Certificate{
         )
 
         return editCerti
-    }
+    } 
 
 
 static async deleteCerti({id}){

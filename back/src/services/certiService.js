@@ -91,7 +91,7 @@ class certiService{
                 id,
                 fieldToUpdate,
                 newValue
-            })
+            }) 
         }
         // console.log(editCerti)
         return editCerti

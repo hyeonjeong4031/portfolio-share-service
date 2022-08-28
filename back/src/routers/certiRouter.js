@@ -71,7 +71,7 @@ certiRouter.delete("/delete", login_required, async (req, res, next) => {
     // console.log("id:",id, )
 
     const deleteResult = await certiService.deleteCerti({user_id, id})
-    // res.status(200).json("hello")
+    // res.status(200).json("hello") 
     res.status(200).json(deleteResult);
   } catch (error) {
     next(error);
