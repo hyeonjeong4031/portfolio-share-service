@@ -8,39 +8,24 @@ const EducationEditForm = ({
   setIsEditing,
 }) => {
   const [formData, setFormData] = useState({
-    educationId: currentEducation.id,
+    id: currentEducation.id,
     school: currentEducation.school,
     major: currentEducation.major,
     position: currentEducation.position,
   });
 
-  const [errMsg, setErrMsg] = useState("");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    if (!formData.school) {
-      setErrMsg("학교 이름을 입력해 주세요.");
-      return;
-    }
-    if (!formData.major) {
-      setErrMsg("전공을 입력해 주세요.");
-      return;
-    }
-    setErrMsg("");
-    try {
-      console.log(formData);
-      await Api.put("education/:id", formData);
 
-      const res = await Api.get(
-        "education/educationlist",
-        currentEducation.userId
-      );
-      setEducations(res.data);
-      setIsEditing(false);
-    } catch (err) {
-      console.log(err);
-    }
+    await Api.put("education/:id", formData);
+
+    const res = await Api.get(
+      "education/educationlist",
+      currentEducation.userId
+    );
+    setEducations(res.data);
+    setIsEditing(false);
   };
 
   const handleChange = (e) => {
@@ -113,13 +98,6 @@ const EducationEditForm = ({
           onChange={handleChange}
         />
       </div>
-      <Col>
-        {errMsg && (
-          <Alert variant="info" className="pt-2 pb-2 mt-3 mb-4">
-            {errMsg}
-          </Alert>
-        )}
-      </Col>
 
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>

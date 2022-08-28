@@ -11,10 +11,11 @@ const EducationAddForm = ({ portfolioOwnerId, setEducations, setIsAdding }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
 
     await Api.post("education/create", formData);
 
-    const res = await Api.get("education/educationlist", portfolioOwnerId);
+    const res = await Api.get("education/educationlist");
     setEducations(res.data);
     setIsAdding(false);
   };
