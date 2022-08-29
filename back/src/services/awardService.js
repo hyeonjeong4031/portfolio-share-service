@@ -43,6 +43,42 @@ class awardService{
         allAward.errorMessage = null;
         return allAward
     }
+
+    static async readOneAward({awardID}){
+        console.log(`하나의 Award가 요청되었습니다. 요청 id : ${awardID}`)
+        if(!awardID){
+            const errorMessage="인자 값이 전달되지 않았습니다";
+            return {errorMessage}
+        }
+        const thisAward = await Award.findByAwardId({awardID})
+        if(!thisAward){
+            const errorMessage = "해당하는 게시글이 존재하지 않습니다"
+            return {errorMessage}
+        }
+        // thisAward.errorMessage = null;
+        return thisAward;
+    }
+
+    static async fixAward({awardID, title, description}){
+        console.log('Award 수정 요청 발생')
+        console.log(`awardID : ${awardID} title : ${title} description : ${description}`)
+        const fixedData = {
+            title : title,
+            description : description
+        }
+        const fixedAward = await Award.fixOneAward({
+            filter : awardID, 
+            data : fixedData})
+        return fixedAward
+    }
+
+    static async deleteAward({awardID}){
+        console.log('삭제 요청 발생')
+        const deletedData = await Award.deleteOneAward({
+            awardID : awardID
+        })
+        return deletedData
+    }
 }
 
 export { awardService };
