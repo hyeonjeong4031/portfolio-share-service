@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
+import * as Api from "../../api";
 
 const EducationCard = ({ education, isEditable, setIsEditing }) => {
   return (
@@ -12,6 +13,7 @@ const EducationCard = ({ education, isEditable, setIsEditing }) => {
             education.position || ""
           })`}</span>
         </Col>
+
         {isEditable && (
           <Col xs lg="1">
             <Button
@@ -24,6 +26,12 @@ const EducationCard = ({ education, isEditable, setIsEditing }) => {
             </Button>
           </Col>
         )}
+
+        <Col xs lg="1">
+          <Button variant="outline-danger" size="sm" className="mr-3">
+            삭제
+          </Button>
+        </Col>
       </Row>
     </Card.Text>
   );
