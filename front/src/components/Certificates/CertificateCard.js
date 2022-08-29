@@ -1,6 +1,12 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
+import * as Api from "../../api";
 
 const CertificateCard = ({ certificate, isEditable, setIsEditing }) => {
+  const certificatetDelete = () => {
+    Api.delete("certificate/delete", {
+      id: "",
+    });
+  };
   return (
     <Card.Text>
       <Row className="align-items-center">
@@ -25,7 +31,12 @@ const CertificateCard = ({ certificate, isEditable, setIsEditing }) => {
         )}
 
         <Col xs lg="1">
-          <Button variant="outline-danger" size="sm" className="mr-3">
+          <Button
+            onClick={certificatetDelete}
+            variant="outline-danger"
+            size="sm"
+            className="mr-3"
+          >
             삭제
           </Button>
         </Col>
