@@ -1,6 +1,6 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 
-function CertificateCard({ certificate, isEditable, setIsEditing }) {
+const CertificateCard = ({ certificate, isEditable, setIsEditing }) => {
   return (
     <Card.Text>
       <Row className="align-items-center">
@@ -23,9 +23,15 @@ function CertificateCard({ certificate, isEditable, setIsEditing }) {
             </Button>
           </Col>
         )}
+
+        <Col xs lg="1">
+          <Button variant="outline-danger" size="sm" className="mr-3">
+            삭제
+          </Button>
+        </Col>
       </Row>
     </Card.Text>
   );
-}
+};
 
 export default CertificateCard;

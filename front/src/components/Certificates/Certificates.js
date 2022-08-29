@@ -4,7 +4,7 @@ import * as Api from "../../api";
 import Certificate from "./Certificate";
 import CertificateAddForm from "./CertificateAddForm";
 
-function Certificates({ portfolioOwnerId, isEditable }) {
+const Certificates = ({ portfolioOwnerId, isEditable }) => {
   const [certificates, setCertificates] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -43,6 +43,6 @@ function Certificates({ portfolioOwnerId, isEditable }) {
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default Certificates;

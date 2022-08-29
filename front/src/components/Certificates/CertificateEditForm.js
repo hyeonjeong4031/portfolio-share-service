@@ -1,68 +1,89 @@
 import React, { useState } from "react";
-import { Button, Form, Col, Row } from "react-bootstrap";
-import DatePicker from "react-datepicker";
+import { Alert, Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function CertificateEditForm({
+const CertificateEditForm = ({
   currentCertificate,
   setCertificates,
   setIsEditing,
-}) {
-  const [title, setTitle] = useState(currentCertificate.title);
-  const [description, setDescription] = useState(
-    currentCertificate.description
-  );
-  const [whenDate, setWhenDate] = useState(
-    new Date(currentCertificate.when_date)
-  );
-  const [id, setId] = useState(currentCertificate.id);
+}) => {
+  const [formData, setFormData] = useState({
+    id: currentCertificate.id,
+    title: currentCertificate.title,
+    description: currentCertificate.description,
+    whenDate: currentCertificate.when_date.substring(0, 10),
+  });
+
+  const [errMsg, setErrMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.title) {
+      setErrMsg("자격증 이름을 입력해 주세요.");
+      return;
+    }
+    if (!formData.description) {
+      setErrMsg("자격증 상세 내역을 입력해 주세요.");
+      return;
+    }
+    setErrMsg("");
+    try {
+      await Api.put("certificate/edit/", formData);
 
-    const user_id = currentCertificate.user_id;
-    const when_date = whenDate.toISOString().substring(0, 10);
+      const res = await Api.get("certificate/certificatelist");
+      setCertificates(res.data);
+      setIsEditing(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    await Api.put("certificate/edit/", {
-      id,
-      title,
-      description,
-      when_date,
+  const handleChange = (e) => {
+    setFormData((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
     });
-
-    const res = await Api.get("certificate/certificatelist");
-    setCertificates(res.data);
-    setIsEditing(false);
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="certificateEditTitle">
+      <Form.Group controlId="certificateAddTitle">
         <Form.Control
           type="text"
+          name="title"
           placeholder="자격증 제목"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={formData.title}
+          onChange={handleChange}
         />
       </Form.Group>
 
-      <Form.Group controlId="certificateEditDescription" className="mt-3">
+      <Form.Group controlId="certificateAddDescription" className="mt-3">
         <Form.Control
           type="text"
+          name="description"
           placeholder="상세내역"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={formData.description}
+          onChange={handleChange}
         />
       </Form.Group>
 
       <Form.Group as={Row} className="mt-3">
-        <Col xs="auto">
-          <DatePicker
-            selected={whenDate}
-            onChange={(date) => setWhenDate(date)}
+        <Col className="col-auto">
+          <Form.Control
+            type="date"
+            name="whenDate"
+            value={formData.whenDate}
+            onChange={handleChange}
           />
         </Col>
       </Form.Group>
+
+      <Col>
+        {errMsg && (
+          <Alert variant="info" className="pt-2 pb-2 mt-3 mb-4">
+            {errMsg}
+          </Alert>
+        )}
+      </Col>
 
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>
@@ -76,6 +97,6 @@ function CertificateEditForm({
       </Form.Group>
     </Form>
   );
-}
+};
 
 export default CertificateEditForm;

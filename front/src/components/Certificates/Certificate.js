@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CertificateCard from "./CertificateCard";
 import CertificateEditForm from "./CertificateEditForm";
 
-function Certificate({ certificate, setCertificates, isEditable }) {
+const Certificate = ({ certificate, setCertificates, isEditable }) => {
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
@@ -21,6 +21,6 @@ function Certificate({ certificate, setCertificates, isEditable }) {
       )}
     </>
   );
-}
+};
 
 export default Certificate;
