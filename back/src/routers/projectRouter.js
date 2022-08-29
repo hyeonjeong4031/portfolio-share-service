@@ -1,8 +1,22 @@
 import { Router } from "express";
 import { ProjectService } from "../services/projectService";
 import { login_required } from "../middlewares/login_required";
+import multer from "multer";
 
 const projectRouter = Router();
+
+const upload = multer({
+  limits: {
+    fileSize: 2000000,
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|png)$/)) {
+      return cb(new Error("Please upload a JPG or PNG"));
+    }
+
+    cb(undefined, true);
+  },
+});
 
 //project list get
 projectRouter.get("/project", login_required, async function (req, res, next) {
@@ -104,6 +118,50 @@ projectRouter.get(
       const user_id = req.params.id;
       const projectList = await ProjectService.getProjects({ user_id });
       res.status(200).send(projectList);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+//get project image
+projectRouter.get("/project/:projectId/image", async function (req, res, next) {
+  try {
+    const project_id = req.params.projectId;
+
+    const project = await ProjectService.getProjectImg({ project_id });
+
+    res.set("Content-Type", "image/jpg");
+    res.send(project.image);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//update project image
+projectRouter.put(
+  "/project/:projectId/image",
+  login_required,
+  upload.single("upload"),
+  async function (req, res, next) {
+    try {
+      const img = req.file.buffer;
+      const user_id = req.currentUserId;
+      const project_id = req.params.projectId;
+
+      const toUpdate = { img };
+
+      const updatedProject = await ProjectService.setProject({
+        project_id,
+        toUpdate,
+        user_id,
+      });
+
+      if (updatedProject.errorMessage) {
+        throw new Error(updatedProject.errorMessage);
+      }
+
+      res.status(200).send("Image updated successfully!");
     } catch (error) {
       next(error);
     }

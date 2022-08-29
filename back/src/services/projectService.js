@@ -71,6 +71,16 @@ class ProjectService {
       });
     }
 
+    if (toUpdate.img) {
+      const fieldToUpdate = "image";
+      const newValue = toUpdate.img;
+      project = await Project.updateProject({
+        project_id,
+        fieldToUpdate,
+        newValue,
+      });
+    }
+
     return project;
   }
 
@@ -88,6 +98,12 @@ class ProjectService {
     const projctList = await Project.getProjectsByUserId({ user_id });
 
     return projctList;
+  }
+
+  static async getProjectImg({ project_id }) {
+    const project = await Project.getProjectByProjectId({ project_id });
+
+    return project;
   }
 }
 
