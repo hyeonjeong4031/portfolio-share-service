@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Alert, Button, Form, Col, Row } from "react-bootstrap";
-import DatePicker from "react-datepicker";
 import * as Api from "../../api";
 
 const CertificateAddForm = ({
@@ -76,13 +75,6 @@ const CertificateAddForm = ({
             onChange={handleChange}
           />
         </Col>
-        {/* <Col xs="auto">
-          <DatePicker
-            name="whenDate"
-            selected={formData.whenDate}
-            onChange={(date) => formData.whenDate(date)}
-          />
-        </Col> */}
       </Form.Group>
 
       <Col>
