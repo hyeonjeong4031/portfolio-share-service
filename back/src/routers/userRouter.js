@@ -36,11 +36,11 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
 });
 
 userAuthRouter.post("/user/login", async function (req, res, next) {
-  try {
+  try { 
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
     const password = req.body.password;
-
+   
     // 위 데이터를 이용하여 유저 db에서 유저 찾기
     const user = await userAuthService.getUser({ email, password });
 
@@ -74,6 +74,7 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+      console.log(req);
       const user_id = req.currentUserId;
       const currentUserInfo = await userAuthService.getUserInfo({
         user_id,
@@ -96,7 +97,9 @@ userAuthRouter.put(
   async function (req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
+      console.log('header!!!!!!!!!! ', req.headers);
       const user_id = req.params.id;
+      console.log()
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;

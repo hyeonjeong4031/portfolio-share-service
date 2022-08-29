@@ -18,6 +18,7 @@ class userAuthService {
 
     // id 는 유니크 값 부여
     const id = uuidv4();
+    console.log(name,email,password);
     const newUser = { id, name, email, password: hashedPassword };
 
     // db에 저장
