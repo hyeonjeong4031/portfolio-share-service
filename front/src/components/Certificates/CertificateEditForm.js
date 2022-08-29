@@ -28,7 +28,12 @@ const CertificateEditForm = ({
     }
     setErrMsg("");
     try {
-      await Api.put("certificate/edit/", formData);
+      await Api.put("certificate/edit/", {
+        id: formData.id,
+        title: formData.title,
+        description: formData.description,
+        when_date: formData.whenDate,
+      });
 
       const res = await Api.get("certificate/certificatelist");
       setCertificates(res.data);
