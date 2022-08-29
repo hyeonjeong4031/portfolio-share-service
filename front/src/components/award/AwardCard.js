@@ -9,7 +9,7 @@ function AwardCard({ award, isEditable, setIsEditing }) {
           <br />
           <span className="text-muted">{award.description}</span>
         </Col>
-        {(
+        {isEditable && (
           <Col xs lg="1">
             <Button
               variant="outline-info"
@@ -18,6 +18,14 @@ function AwardCard({ award, isEditable, setIsEditing }) {
               className="mr-3"
             >
               편집
+            </Button>
+            <Button
+              variant="outline-info"
+              size="sm"
+              onClick={() => setIsEditing((prev) => !prev)}
+              className="mr-3"
+            >
+              삭제
             </Button>
           </Col>
         )}
