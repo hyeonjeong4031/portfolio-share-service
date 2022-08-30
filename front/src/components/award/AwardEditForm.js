@@ -16,12 +16,13 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     const user_id = currentAward.user_id;
 
     // "awards/수상 id" 엔드포인트로 PUT 요청함.
-    await Api.put(`/award/fix/${currentAward.id}`, {
+    await Api.put(`award/fix/${currentAward.id}`, {
       title,
       description
     });
 
     // "award/readAll" 엔드포인트로 GET 요청함.
+    console.log("Edit쪽")
     const res = await Api.get("award/readAll");
     // awards를 response의 data로 세팅함.
     setAwards(res.data);

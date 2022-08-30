@@ -105,19 +105,23 @@ class eduService{
     }  
 
 // //4.삭제
-// static async deleteEdu({id, user_id}){
-//     let user = await Edu.findAllEdu(user_id); 
-// console.log(user.user_id)
-//     if(user_id !==user.user_id){
-//         const errorMessage  = "본인의 포스트가 아님"
-//         return {errorMessage}
-//     }
+static async deleteEdu({id, user_id}){
+    let delEdu = await Edu.findById({id}); 
+    console.log(user_id)
+    if(user_id !== delEdu[0].user_id){
+            const errorMessage  = "본인의 포스트가 아님"
+            return {errorMessage}
+
+    }
+     await Edu.deleteEdu({id})
+    const Edulist = await Edu.findAllEdu(user_id)
+    return Edulist
 
 
 }
 
 
-
+}
 
 
 export {eduService}
