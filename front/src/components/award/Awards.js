@@ -12,8 +12,9 @@ function Awards({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
     // "awardlist/유저id"로 GET 요청하고, response의 data로 awards를 세팅함.
+    console.log("Awards쪽")
     Api.get("award/readAll").then((res) => setAwards(res.data));
-  });
+  }, []);
 
   return (
     <Card>
