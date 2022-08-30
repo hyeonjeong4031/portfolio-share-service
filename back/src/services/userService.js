@@ -12,6 +12,11 @@ class userAuthService {
         "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.";
       return { errorMessage };
     }
+    //여기 정보 수정하는 로직 넣어야 할듯?
+    //withdrawal=false, 
+    //근데 post 로직이라 정보 추간데 지금 하려는건 put
+    //service 내용 따로 빼서 구현해야할듯?
+    
 
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -31,11 +36,18 @@ class userAuthService {
   static async getUser({ email, password }) {
     // 이메일 db에 존재 여부 확인
     const user = await User.findByEmail({ email });
-    if (!user) {
+    // console.log("어디에있을까요",user.withdrawal)
+
+    console.log("!!!!!!!!!!!!!!!!!!!")
+    if (!user || user.withdrawal) {
       const errorMessage =
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
+    
     }
+  
+    
+    
 
     // 비밀번호 일치 여부 확인
     const correctPasswordHash = user.password;
@@ -125,6 +137,30 @@ class userAuthService {
 
     return user;
   }
+
+
+  static async userWithdrawal({user_id, id, withdrawal}){
+    // console.log("!!!!!!!!!!!")
+    // console.log(user_id)
+    if(user_id !== id){
+      const errorMessage = "User id does not match"
+      return errorMessage
+    }
+    
+    if(withdrawal === true){
+      let user = await User.findById({user_id}) 
+      
+      const fieldToUpdate = "withdrawal";
+      const newValue = withdrawal;
+      user = await User.update({ user_id, fieldToUpdate, newValue });
+      console.log(user)
+      return
+
+      //뭘 리턴해야할지 모르겠습니다
+      
+    }
+  }
 }
+
 
 export { userAuthService };
