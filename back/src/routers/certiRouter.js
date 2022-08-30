@@ -52,7 +52,7 @@ certiRouter.put("/edit", login_required, async (req, res, next) => {
       description,
       when_date
     }
-
+    // console.log(1)
     const editCerti = await certiService.editCerti({user_id, toUpdate, id})
     
     // res.status(200).json("Hello");

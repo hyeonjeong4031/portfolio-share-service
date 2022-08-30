@@ -47,16 +47,18 @@ class certiService{
     //3. edit
     //user_id랑 게시물의 user_id, id랑 게시글의 id 확인
     static async editCerti({user_id, toUpdate, id}){
+        // console.log(2)
+
        const CertiData1 = await Certificate.getCerti({user_id})
        const CertiData2 = await Certificate.getCertiId({id})
        //     return
+    //    console.log("!!!!!!!!!!",CertiData2)
        // }
        let editCerti = await CertiData2[0]
     //    console.log("serviceData:",toUpdate)
     //    console.log("DATA1,",CertiData1[0].user_id)
     //    console.log(" DATA2:",CertiData2[0].id)
     //    console.log("id:",id)
-
        if(user_id !== CertiData1[0].user_id){
            const errorMessage = "User_id does not match "
            return errorMessage
