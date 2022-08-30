@@ -25,7 +25,7 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
       email,
       password,
     });
-    console.log("🐰1:",newUser)
+    console.log("🐰3:",newUser)
 
     if (newUser.errorMessage) {
       throw new Error(newUser.errorMessage);
@@ -145,13 +145,13 @@ userAuthRouter.get(
   }
 );
 
-userAuthRouter.put("/withdrawal",
+userAuthRouter.put("/withdrawal:id",
     login_required, 
     async function (req, res, next){
       try {
         const withdrawal = req.body.withdrawal??null
         const user_id = req.currentUserId
-        const id = req.body.id;
+        const id = req.params.id;
         const idStatus = await userAuthService.userWithdrawal({user_id, id, withdrawal})
 
 
