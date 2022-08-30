@@ -20,6 +20,7 @@ function Project({ key, project, isEditable, setProjects }) {
         project={project}
         isEditable={isEditable}
         setIsEditing={setIsEditing}
+        setProjects={setProjects}
       />
     );
   }

@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row, Button } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
 import Projects from "./projects/Projects";
 import Educations from "./educations/Educations";
 import Awards from "./award/Awards.js";
+import Certificates from "./Certificates/Certificates";
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -79,6 +80,12 @@ function Portfolio() {
           </div>
           <div>
             <Educations
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </div>
+          <div>
+            <Certificates
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />

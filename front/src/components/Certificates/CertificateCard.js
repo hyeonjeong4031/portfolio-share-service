@@ -1,35 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 
-const EducationCard = ({
-  education,
-  setEducations,
-  isEditable,
-  setIsEditing,
-}) => {
-  const educationtDelete = async () => {
-    try {
-      await Api.delete(`education/delete/${education.id}`);
-
-      const res = await Api.get("education/educationlist");
-      setEducations(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+const CertificateCard = ({ certificate, isEditable, setIsEditing }) => {
   return (
     <Card.Text>
       <Row className="align-items-center">
         <Col>
-          <span>{education.school}</span>
+          {certificate.title}
           <br />
-          <span className="text-muted">{`${education.major} (${
-            education.position || ""
-          })`}</span>
+          <span className="text-muted">{certificate.description}</span>
+          <br />
+          <span className="text-muted">
+            {certificate.when_date.substring(0, 10)}
+          </span>
         </Col>
-
         {isEditable && (
           <Col xs lg="1">
             <Button
@@ -45,7 +30,7 @@ const EducationCard = ({
 
         <Col xs lg="1">
           <Button
-            onClick={() => educationtDelete()}
+            // onClick={certificatetDelete}
             variant="outline-danger"
             size="sm"
             className="mr-3"
@@ -58,4 +43,4 @@ const EducationCard = ({
   );
 };
 
-export default EducationCard;
+export default CertificateCard;
