@@ -22,6 +22,8 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     });
 
     // "award/readAll" 엔드포인트로 get요청함.
+    console.log("Add쪽")
+    
     const res = await Api.get("award/readAll");
     // awards를 response의 data로 세팅함.
     setAwards(res.data);

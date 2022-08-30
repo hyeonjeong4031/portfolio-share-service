@@ -1,4 +1,5 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
+import AwardDelete from "./AwardDelete"
 
 function AwardCard({ award, isEditable, setIsEditing }) {
   return (
@@ -20,10 +21,9 @@ function AwardCard({ award, isEditable, setIsEditing }) {
               편집
             </Button>
             <Button
-              variant="outline-info"
               size="sm"
-              onClick={() => setIsEditing((prev) => !prev)}
-              className="mr-3"
+              onClick={() => AwardDelete((prev) => !prev)}
+              className="mr-3 btn-outline-danger"
             >
               삭제
             </Button>
