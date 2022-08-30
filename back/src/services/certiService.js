@@ -84,8 +84,11 @@ class certiService{
                 newValue
             })
         }
+        // console.log("hello!!!!!!!")
+        // console.log(toUpdate.when_date)
+        
         if(toUpdate.when_date){
-            const fieldToUpdate = "when_data";
+            const fieldToUpdate = "when_date";
             const newValue = toUpdate.when_date;
             editCerti = await Certificate.editCerti({
                 id,
@@ -93,6 +96,7 @@ class certiService{
                 newValue
             }) 
         }
+        // console.log(toUpdate.when_date)
         // console.log(editCerti)
         return editCerti
 
@@ -107,7 +111,7 @@ class certiService{
         // console.log("해당 포스트의 유저id", getpost[0].user_id)
         // console.log("user_id", user_id)
         if(user_id !== getpost[0].user_id){
-            const errorMessage = "user_id does not match"
+            const errorMessage = "No authorization to delete this certificate"
             return errorMessage
         }
         await Certificate.deleteCerti({id})
