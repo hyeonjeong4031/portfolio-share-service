@@ -5,6 +5,7 @@ import multer from "multer";
 
 const projectRouter = Router();
 
+//image limit
 const upload = multer({
   limits: {
     fileSize: 2000000,
@@ -131,6 +132,10 @@ projectRouter.get("/project/:projectId/image", async function (req, res, next) {
 
     const project = await ProjectService.getProjectImg({ project_id });
 
+    if (project.errorMessage) {
+      throw new Error(project.errorMessage);
+    }
+
     res.set("Content-Type", "image/jpg");
     res.send(project.image);
   } catch (error) {
@@ -162,6 +167,31 @@ projectRouter.put(
       }
 
       res.status(200).send("Image updated successfully!");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+//delete project image
+projectRouter.delete(
+  "/project/:projectId/image",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const project_id = req.params.projectId;
+      const user_id = req.currentUserId;
+
+      const deletedProject = await ProjectService.removeProjectImg({
+        project_id,
+        user_id,
+      });
+
+      if (deletedProject.errorMessage) {
+        throw new Error(deletedProject.errorMessage);
+      }
+
+      res.status(200).send(deletedProject);
     } catch (error) {
       next(error);
     }
