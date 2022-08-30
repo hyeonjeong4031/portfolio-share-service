@@ -63,9 +63,10 @@ certiRouter.put("/edit", login_required, async (req, res, next) => {
 });
 
 //4. 자격증 정보 삭제
-certiRouter.delete("/delete", login_required, async (req, res, next) => {
+certiRouter.delete("/delete/:id", login_required, async (req, res, next) => {
   try {
-    const id = req.body.id;
+    const id = req.params.id;
+    // console.log("params",id)
     const user_id =req.currentUserId
     // console.log("user_id:",user_id, )
     // console.log("id:",id, )
