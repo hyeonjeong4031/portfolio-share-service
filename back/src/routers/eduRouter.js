@@ -1,6 +1,5 @@
 import is from "@sindresorhus/is";
 import { Router } from "express";
-import { User, Edu } from "../db";
 import { login_required } from "../middlewares/login_required";
 import { eduService } from "../services/eduService";
 const eduRouter = Router();
@@ -94,13 +93,12 @@ eduRouter.delete(
   async function (req, res, next) {
     try {
       const user_id = req.currentUserId;
-      const id = req.body.id;
-      await Edu.deleteEdu({ id, user_id });
+      const id = req.params.id;
+      const deleteOne = await eduService.deleteEdu({ id, user_id });
       //list는 delete 후 남은 list를 res해주면 된다
-      // console.log("hello!!!");
-      const edu = await eduService.getEduinfo({ user_id });
+      // const edu = await eduService.getEduinfo({ user_id });
 
-      res.status(200).json(edu);
+      res.status(200).json(deleteOne);
     } catch (error) {
       next(error);
     }
@@ -193,9 +191,8 @@ eduRouter.delete(
   async function (req, res, next) {
     try {
       const user_id = req.currentUserId;
-      const id = req.body.id;
-      await Edu.deleteEdu({ id, user_id });
-      //list는 delete 후 남은 list를 res해주면 된다
+      const id = req.params.id;
+      const deleteEdu = await eduService.deleteEdu({ id, user_id });
       // console.log("hello!!!");
       const edu = await eduService.getEduinfo({ user_id });
 
