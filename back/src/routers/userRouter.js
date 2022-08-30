@@ -25,6 +25,7 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
       email,
       password,
     });
+    console.log("🐰1:",newUser)
 
     if (newUser.errorMessage) {
       throw new Error(newUser.errorMessage);
