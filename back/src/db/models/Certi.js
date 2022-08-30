@@ -10,13 +10,14 @@ class Certificate{
 
     static async getCerti({user_id}){
         const certificates = await certiModel.find({user_id})
-        
+        // console.log("🐰user_id",certificates)
+
         return certificates
     }
     static async getCertiId({id}){
-        const certificates = await certiModel.find({user_id:id})
+        const certificates = await certiModel.find({id})
         
-        console.log("🐰",certificates)
+        // console.log("🐰id:",certificates)
         return certificates
     }
 
