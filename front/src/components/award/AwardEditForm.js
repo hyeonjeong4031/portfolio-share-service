@@ -16,14 +16,14 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     const user_id = currentAward.user_id;
 
     // "awards/수상 id" 엔드포인트로 PUT 요청함.
-    await Api.put(`awards/${currentAward.id}`, {
-      user_id,
+    await Api.put(`award/fix/${currentAward.id}`, {
       title,
-      description,
+      description
     });
 
     // "award/readAll" 엔드포인트로 GET 요청함.
-    const res = await Api.get("award/readAll", user_id);
+    console.log("Edit쪽")
+    const res = await Api.get("award/readAll");
     // awards를 response의 data로 세팅함.
     setAwards(res.data);
     // 편집 과정이 끝났으므로, isEditing을 false로 세팅함.

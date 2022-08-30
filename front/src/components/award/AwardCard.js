@@ -1,4 +1,5 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
+import AwardDelete from "./AwardDelete"
 
 function AwardCard({ award, isEditable, setIsEditing }) {
   return (
@@ -9,7 +10,7 @@ function AwardCard({ award, isEditable, setIsEditing }) {
           <br />
           <span className="text-muted">{award.description}</span>
         </Col>
-        {(
+        {isEditable && (
           <Col xs lg="1">
             <Button
               variant="outline-info"
@@ -18,6 +19,13 @@ function AwardCard({ award, isEditable, setIsEditing }) {
               className="mr-3"
             >
               편집
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => AwardDelete((prev) => !prev)}
+              className="mr-3 btn-outline-danger"
+            >
+              삭제
             </Button>
           </Col>
         )}
