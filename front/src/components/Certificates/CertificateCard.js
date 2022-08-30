@@ -10,7 +10,7 @@ const CertificateCard = ({
 }) => {
   const certificateDelete = async () => {
     try {
-      await Api.delete("certificate/delete");
+      await Api.delete(`certificate/delete/${certificate.id}`);
 
       const res = await Api.get("certificate/certificatelist");
       setCertificates(res.data);
@@ -32,28 +32,30 @@ const CertificateCard = ({
           </span>
         </Col>
         {isEditable && (
-          <Col xs lg="1">
-            <Button
-              variant="outline-info"
-              size="sm"
-              onClick={() => setIsEditing((prev) => !prev)}
-              className="mr-3"
-            >
-              편집
-            </Button>
+          <Col>
+            <Col xs lg="1">
+              <Button
+                variant="outline-info"
+                size="sm"
+                onClick={() => setIsEditing((prev) => !prev)}
+                className="mr-3"
+              >
+                편집
+              </Button>
+            </Col>
+
+            <Col xs lg="1">
+              <Button
+                onClick={() => certificateDelete()}
+                variant="outline-danger"
+                size="sm"
+                className="mr-3"
+              >
+                삭제
+              </Button>
+            </Col>
           </Col>
         )}
-
-        <Col xs lg="1">
-          <Button
-            onClick={() => certificateDelete()}
-            variant="outline-danger"
-            size="sm"
-            className="mr-3"
-          >
-            삭제
-          </Button>
-        </Col>
       </Row>
     </Card.Text>
   );
