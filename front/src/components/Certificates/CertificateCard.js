@@ -2,7 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 
-const CertificateCard = ({ certificate, isEditable, setIsEditing }) => {
+const CertificateCard = ({
+  certificate,
+  setCertificates,
+  isEditable,
+  setIsEditing,
+}) => {
+  const certificateDelete = async () => {
+    try {
+      await Api.delete("certificate/delete");
+
+      const res = await Api.get("certificate/certificatelist");
+      setCertificates(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Card.Text>
       <Row className="align-items-center">
@@ -30,7 +46,7 @@ const CertificateCard = ({ certificate, isEditable, setIsEditing }) => {
 
         <Col xs lg="1">
           <Button
-            // onClick={certificatetDelete}
+            onClick={() => certificateDelete()}
             variant="outline-danger"
             size="sm"
             className="mr-3"
