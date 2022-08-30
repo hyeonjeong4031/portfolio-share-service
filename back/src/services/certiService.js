@@ -122,7 +122,18 @@ class certiService{
 
 
 
-    
+//     //5. network get
+    static async getCertificateId({id}){
+    console.log("Hey",id)
+
+        // if(!id){
+        //     return "user_id is required"
+        // }
+        const getCertilist = await Certificate.getCertiId({id})
+        console.log("?!!!" ,getCertilist)
+
+        return getCertilist
+    }
 
 
 };

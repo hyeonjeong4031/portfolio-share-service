@@ -34,7 +34,6 @@ class eduService{
     }  
     
   //2. 본인 학력정보 조회  
-    //네트워크페이지에서 유저 정보 호출시 같이 나오도록 하는 서비스
     static async getEduinfo({user_id}){
         console.log("user_id:",{user_id})
         console.log("user_id:",user_id)
@@ -119,6 +118,22 @@ static async deleteEdu({id, user_id}){
 
 
 }
+
+
+
+static async getEduNet({id}){
+    console.log("user_id!!!!!!!!!:",id)
+    // console.log(typeof(user_id))
+
+    if(!id){
+        const errorMessage  = "정보를 조회할 대상이 없음"
+        return {errorMessage}
+    }
+
+const alledu = await Edu.findAllEdu(id);
+    return alledu
+}
+
 
 
 }
