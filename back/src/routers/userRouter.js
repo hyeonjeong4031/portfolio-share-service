@@ -46,7 +46,7 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
     const user = await userAuthService.getUser({ email, password });
     console.log("router",user)
 
-
+    console.log(user)
     if (user.errorMessage) {
       throw new Error(user.errorMessage);
     }

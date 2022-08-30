@@ -72,11 +72,11 @@ projectRouter.put("/project", login_required, async function (req, res, next) {
 
 //project delete
 projectRouter.delete(
-  "/project",
+  "/project/:projectId",
   login_required,
   async function (req, res, next) {
     try {
-      const project_id = req.body.projectId;
+      const project_id = req.params.projectId;
       const user_id = req.currentUserId;
 
       const deletedProject = await ProjectService.removeProject({

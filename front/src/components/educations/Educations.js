@@ -36,7 +36,7 @@ const Educations = ({ portfolioOwnerId, isEditable }) => {
         </Col>
         {isEditable && (
           <Row className="mt-3 mb-4 text-center">
-            <Col>
+            <Col sm={{ span: 20 }}>
               <Button varient="primary" onClick={() => setIsAdding(true)}>
                 +
               </Button>

@@ -32,21 +32,13 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     <Card className="mb-2">
       <Card.Body>
         <Form onSubmit={handleSubmit}>
+          <Card.Title className="mb-3">{email}</Card.Title>
           <Form.Group controlId="useEditName" className="mb-3">
             <Form.Control
               type="text"
               placeholder="이름"
               value={name}
               onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="userEditEmail" className="mb-3">
-            <Form.Control
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
 

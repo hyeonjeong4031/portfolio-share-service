@@ -9,15 +9,28 @@ const EducationAddForm = ({ portfolioOwnerId, setEducations, setIsAdding }) => {
     position: "재학중",
   });
 
+  const [errMsg, setErrMsg] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (!formData.school) {
+      setErrMsg("학교 이름을 입력해 주세요.");
+      return;
+    }
+    if (!formData.major) {
+      setErrMsg("전공을 입력해 주세요.");
+      return;
+    }
+    setErrMsg("");
+    try {
+      await Api.post("education/create", formData);
 
-    await Api.post("education/create", formData);
-
-    const res = await Api.get("education/educationlist");
-    setEducations(res.data);
-    setIsAdding(false);
+      const res = await Api.get("education/educationlist");
+      setEducations(res.data);
+      setIsAdding(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleChange = (e) => {
@@ -90,6 +103,14 @@ const EducationAddForm = ({ portfolioOwnerId, setEducations, setIsAdding }) => {
           onChange={handleChange}
         />
       </div>
+
+      <Col>
+        {errMsg && (
+          <Alert variant="info" className="pt-2 pb-2 mt-3 mb-4">
+            {errMsg}
+          </Alert>
+        )}
+      </Col>
 
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
