@@ -1,14 +1,8 @@
+import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 
 const CertificateCard = ({ certificate, isEditable, setIsEditing }) => {
-  const certificatetDelete = () => {
-    Api.delete("certificate/delete", {
-      id: "",
-    });
-  };
-
-  console.log(certificate);
   return (
     <Card.Text>
       <Row className="align-items-center">
@@ -36,7 +30,7 @@ const CertificateCard = ({ certificate, isEditable, setIsEditing }) => {
 
         <Col xs lg="1">
           <Button
-            onClick={certificatetDelete}
+            // onClick={certificatetDelete}
             variant="outline-danger"
             size="sm"
             className="mr-3"
