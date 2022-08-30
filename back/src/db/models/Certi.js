@@ -10,12 +10,37 @@ class Certificate{
 
     static async getCerti({user_id}){
         const certificates = await certiModel.find({user_id})
+        
+        return certificates
+    }
+    static async getCertiId({id}){
+        const certificates = await certiModel.find({id})
+        
+
         return certificates
     }
 
+    static async editCerti({fieldToUpdate, id, newValue}){
+        const filter = {id:id};
+        const update = {[fieldToUpdate]: newValue};
+        const option = {returnOriginal:false}
+        
+        const editCerti = await certiModel.findOneAndUpdate(
+            filter,
+            update,
+            option
+        )
+
+        return editCerti
+    } 
 
 
+static async deleteCerti({id}){
+    const deleteOne = await certiModel.deleteOne({id}) 
+    // console.log("🐰")
+    return deleteOne
 
+}
 
 
 

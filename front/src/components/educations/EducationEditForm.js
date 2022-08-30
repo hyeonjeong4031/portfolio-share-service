@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Col, Row } from "react-bootstrap";
+import { Alert, Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 const EducationEditForm = ({
@@ -7,44 +7,65 @@ const EducationEditForm = ({
   setEducations,
   setIsEditing,
 }) => {
-  const [school, setSchool] = useState(currentEducation.school);
-  const [major, setMajor] = useState(currentEducation.major);
-  const [position, setPosition] = useState(currentEducation.position);
+  const [formData, setFormData] = useState({
+    id: currentEducation.id,
+    school: currentEducation.school,
+    major: currentEducation.major,
+    position: currentEducation.position,
+  });
+
+  const [errMsg, setErrMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.school) {
+      setErrMsg("학교 이름을 입력해 주세요.");
+      return;
+    }
+    if (!formData.major) {
+      setErrMsg("전공을 입력해 주세요.");
+      return;
+    }
+    setErrMsg("");
+    try {
+      await Api.put("education/:id", formData);
 
-    const user_id = currentEducation.user_id;
+      const res = await Api.get(
+        "education/educationlist",
+        currentEducation.userId
+      );
+      setEducations(res.data);
+      setIsEditing(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    await Api.put(`educations/${currentEducation.id}`, {
-      user_id,
-      school,
-      major,
-      position,
+  const handleChange = (e) => {
+    setFormData((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
     });
-
-    const res = await Api.get("education/educationlist", user_id);
-    setEducations(res.data);
-    setIsEditing(false);
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="educationEditSchool">
+      <Form.Group controlId="educationAddSchool">
         <Form.Control
           type="text"
+          name="school"
           placeholder="학교 이름"
-          value={school}
-          onChange={(e) => setSchool(e.target.value)}
+          value={formData.school}
+          onChange={handleChange}
         />
       </Form.Group>
 
-      <Form.Group controlId="educationEditMajor" className="mt-3">
+      <Form.Group controlId="educationAddMajor" className="mt-3">
         <Form.Control
           type="text"
+          name="major"
           placeholder="전공"
-          value={major}
-          onChange={(e) => setMajor(e.target.value)}
+          value={formData.major}
+          onChange={handleChange}
         />
       </Form.Group>
 
@@ -52,44 +73,52 @@ const EducationEditForm = ({
         <Form.Check
           inline
           label="재학중"
-          id="radio-edit-1"
+          id="radio-add-1"
           type="radio"
           name="position"
           value="재학중"
-          checked={position === "재학중"}
-          onChange={(e) => setPosition(e.target.value)}
+          checked={formData.position === "재학중"}
+          onChange={handleChange}
         />
         <Form.Check
           inline
           label="학사졸업"
-          id="radio-edit-2"
+          id="radio-add-2"
           type="radio"
           name="position"
           value="학사졸업"
-          checked={position === "학사졸업"}
-          onChange={(e) => setPosition(e.target.value)}
+          checked={formData.position === "학사졸업"}
+          onChange={handleChange}
         />
         <Form.Check
           inline
           label="석사졸업"
-          id="radio-edit-3"
+          id="radio-add-3"
           type="radio"
           name="position"
           value="석사졸업"
-          checked={position === "석사졸업"}
-          onChange={(e) => setPosition(e.target.value)}
+          checked={formData.position === "석사졸업"}
+          onChange={handleChange}
         />
         <Form.Check
           inline
           label="박사졸업"
-          id="radio-edit-4"
+          id="radio-add-4"
           type="radio"
           name="position"
           value="박사졸업"
-          checked={position === "박사졸업"}
-          onChange={(e) => setPosition(e.target.value)}
+          checked={formData.position === "박사졸업"}
+          onChange={handleChange}
         />
       </div>
+
+      <Col>
+        {errMsg && (
+          <Alert variant="info" className="pt-2 pb-2 mt-3 mb-4">
+            {errMsg}
+          </Alert>
+        )}
+      </Col>
 
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>

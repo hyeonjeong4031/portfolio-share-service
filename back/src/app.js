@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import { userAuthRouter } from "./routers/userRouter";
 import { eduRouter } from "./routers/eduRouter";
-// import { certiRouter } from "./routers/certiRouter";
+import { certiRouter } from "./routers/certiRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { projectRouter } from "./routers/projectRouter";
 
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 app.use(userAuthRouter);
 app.use(projectRouter);
 app.use("/education", eduRouter);
-// app.use("/certificate", certiRouter);
+app.use("/certificate", certiRouter);
 
 //수상 라우터
 app.use("/award", award);
