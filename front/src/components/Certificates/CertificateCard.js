@@ -33,27 +33,29 @@ const CertificateCard = ({
         </Col>
         {isEditable && (
           <Col>
-            <Col xs lg="1">
-              <Button
-                variant="outline-info"
-                size="sm"
-                onClick={() => setIsEditing((prev) => !prev)}
-                className="mr-3"
-              >
-                편집
-              </Button>
-            </Col>
+            <Row>
+              <Col>
+                <Button
+                  variant="outline-info"
+                  size="sm"
+                  onClick={() => setIsEditing((prev) => !prev)}
+                  // className="mr-3"
+                >
+                  편집
+                </Button>
+              </Col>
 
-            <Col xs lg="1">
-              <Button
-                onClick={() => certificateDelete()}
-                variant="outline-danger"
-                size="sm"
-                className="mr-3"
-              >
-                삭제
-              </Button>
-            </Col>
+              <Col>
+                <Button
+                  onClick={() => certificateDelete()}
+                  variant="outline-danger"
+                  size="sm"
+                  // className="ml-3"
+                >
+                  삭제
+                </Button>
+              </Col>
+            </Row>
           </Col>
         )}
       </Row>
