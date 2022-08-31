@@ -7,7 +7,7 @@ class userAuthService {
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
-    // console.log("🐰1.5:",user.withdrawal)
+    console.log("🐰1.5:",user.withdrawal)
 //false인데 왜 if문이작동이 안함?
     if (user ) {
       if(!user.withdrawal){
