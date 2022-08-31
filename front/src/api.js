@@ -59,6 +59,17 @@ async function del(endpoint, params = "") {
   });
 }
 
+async function fileUpload(endpoint, data) {
+  console.log(`%cFILE UPLOAD 요청: ${serverUrl + endpoint}`, "color: #059c4b;");
+  console.log(`%cFILE UPLOAD 요청 데이터: ${data}`, "color: #059c4b;");
+
+  return axios.put(serverUrl + endpoint, data, {
+    headers: {
+      // header: { "content-type": "multipart/form-data" },
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+  });
+}
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.post 로 쓸 수 있음.
-export { get, post, put, del as delete };
+export { get, post, put, del as delete, fileUpload };
