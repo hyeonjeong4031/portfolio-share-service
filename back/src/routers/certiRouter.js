@@ -84,7 +84,7 @@ certiRouter.delete("/delete/:id", login_required, async (req, res, next) => {
 certiRouter.get("/certificatelist/:id", login_required, async (req, res, next) => {
   try {
     const id = req.params.id;
-
+    // console.log("🐰")
     const certiList = await certiService.getCertificateId({ id });
     res.status(200).json(certiList);
   } catch (error) {

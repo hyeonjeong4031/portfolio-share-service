@@ -132,7 +132,7 @@ class certiService{
         //     return "user_id is required"
         // }
         const getCertilist = await Certificate.getCertiId({id})
-        console.log("?!!!" ,getCertilist)
+        // console.log("?!!!" ,getCertilist)
 
         return getCertilist
     }

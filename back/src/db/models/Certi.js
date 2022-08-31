@@ -15,7 +15,8 @@ class Certificate{
         return certificates
     }
     static async getCertiId({id}){
-        const certificates = await certiModel.find({id})
+        // console.log("🐰id:",id)
+        const certificates = await certiModel.find({user_id:id})
         
         // console.log("🐰id:",certificates)
         return certificates
