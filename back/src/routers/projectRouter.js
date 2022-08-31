@@ -5,6 +5,8 @@ import multer from "multer";
 
 const projectRouter = Router();
 
+const storage = multer.memoryStorage();
+
 //image limit
 const upload = multer({
   limits: {
@@ -17,6 +19,7 @@ const upload = multer({
 
     cb(undefined, true);
   },
+  storage: storage,
 });
 
 //project list get
@@ -166,7 +169,7 @@ projectRouter.put(
         throw new Error(updatedProject.errorMessage);
       }
 
-      res.status(200).send("Image updated successfully!");
+      res.status(201).send("Image updated successfully!");
     } catch (error) {
       next(error);
     }
