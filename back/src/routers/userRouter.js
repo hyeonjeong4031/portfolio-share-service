@@ -145,7 +145,7 @@ userAuthRouter.get(
   }
 );
 
-userAuthRouter.put("/withdrawal:id",
+userAuthRouter.put("/withdrawal/:id",
     login_required, 
     async function (req, res, next){
       try {
@@ -153,7 +153,7 @@ userAuthRouter.put("/withdrawal:id",
         const user_id = req.currentUserId
         const id = req.params.id;
         const idStatus = await userAuthService.userWithdrawal({user_id, id, withdrawal})
-
+        console.log(id);
 
         // res.status(200).json("🐰")
         res.status(200).json(idStatus)

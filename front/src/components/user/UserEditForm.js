@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
+// import {useNavigate} from "react-router-dom" navigate로 로그인페이지 가게 하는게 맞나.?(지원)
+
 function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
@@ -9,6 +11,8 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
+
+  // const navigate = useNavigate(); 힝(지원)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +31,15 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     // isEditing을 false로 세팅함.
     setIsEditing(false);
   };
+
+  const handleWithdraw = async(e)=>{
+    e.preventDefault();
+
+    await Api.put(`withdrawal/${user.id}`,{
+      withdrawal:true
+    })
+    // .then( navigate("/", { replace: true })) 탈퇴하면 로그인페이지로 돌아가게 하고 싶어요(지원)
+  }
 
   return (
     <Card className="mb-2">
@@ -60,6 +73,12 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 취소
               </Button>
             </Col>
+            <Col>
+            <Button variant="danger"
+                  size="sm"
+                  onClick={handleWithdraw}>
+                  탈퇴
+                </Button></Col>
           </Form.Group>
         </Form>
       </Card.Body>
