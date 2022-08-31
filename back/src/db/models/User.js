@@ -8,9 +8,10 @@ class User {
 
   static async findByEmail({ email }) {
     const user = await UserModel.findOne({ email });
-    if(user.withdrawal){
-      return
-    }
+    // if(user.withdrawal){
+    //   return
+    // }
+    console.log("🐰1:",user)
 
     return user;
   }

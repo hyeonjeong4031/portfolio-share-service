@@ -22,7 +22,7 @@ const CertificateCard = ({
   return (
     <Card.Text>
       <Row className="align-items-center">
-        <Col>
+        <Col className="text-start">
           {certificate.title}
           <br />
           <span className="text-muted">{certificate.description}</span>
@@ -34,23 +34,24 @@ const CertificateCard = ({
         {isEditable && (
           <Col>
             <Row>
-              <Col>
+              <Col md="8"></Col>
+              <Col md="2">
                 <Button
                   variant="outline-info"
                   size="sm"
                   onClick={() => setIsEditing((prev) => !prev)}
-                  // className="mr-3"
+                  className="mr-3"
                 >
                   편집
                 </Button>
               </Col>
 
-              <Col>
+              <Col md="2">
                 <Button
                   onClick={() => certificateDelete()}
                   variant="outline-danger"
                   size="sm"
-                  // className="ml-3"
+                  className="ml-3"
                 >
                   삭제
                 </Button>

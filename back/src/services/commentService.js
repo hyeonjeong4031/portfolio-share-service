@@ -9,6 +9,7 @@ class commentService {
 
         if(!writerUserID){
             const errorMessage="작성자 값이 전달되지 않았습니다"
+
             return {errorMessage}
         } else if(!commentedID){
             const errorMessage="방명록이 달린 사용자가 전달되지 않았습니다"
@@ -16,7 +17,8 @@ class commentService {
         } else if(!description){
             const errorMessage="내용이 전달되지 않았습니다"
             return {errorMessage}
-        }
+
+        } 
         const newComment = {
             id ,
             commentedID,
@@ -28,6 +30,7 @@ class commentService {
         createNewComment.errorMessage=null;
         return createNewComment
     }
+
 
     static async readComment({currentPageUserID}){
         console.log('comment Service [readComment] Function start');
@@ -61,6 +64,7 @@ class commentService {
         return result
 
     }
+
 }
 
 export {commentService}

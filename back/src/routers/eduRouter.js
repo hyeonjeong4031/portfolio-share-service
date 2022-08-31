@@ -106,25 +106,26 @@ eduRouter.delete(
 );
 
 
-//5. 네트워크 학력정보 조회 라우터
-// eduRouter.get(
-//   "/educationlist/network/:id",
-//   login_required,
-//   async function (req, res, next) {
-//     try {
-//       // console.log(req.body.user_id);
-//       // console.log(req.currentUserId);
-//       const user_id = req.currentUserId;
-//       const id = req.params.id;
-//       // 네트워크 타인 페이지 들어가서 req.body 로
+// 5. 네트워크 학력정보 조회 라우터
+eduRouter.get(
+  "/educationlist/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const id = req.params.id;
+      console.log(id);
+      // 네트워크 타인 페이지 들어가서 req.body 로
 
-//       const edu = await eduService.getEduinfo({ user_id });
+      const edu = await eduService.getEduNet({id});
 
-//       res.status(201).json(edu);
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
 
-export {eduRouter}
+      res.status(201).json(edu);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+
+export { eduRouter };
+

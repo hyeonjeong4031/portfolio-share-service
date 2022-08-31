@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer, useContext } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
+import { UserStateContext } from "../../App";
 import * as Api from "../../api";
 import Certificate from "./Certificate";
 import CertificateAddForm from "./CertificateAddForm";
@@ -8,11 +9,14 @@ const Certificates = ({ portfolioOwnerId, isEditable }) => {
   const [certificates, setCertificates] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
+  const { user } = useContext(UserStateContext);
+
   useEffect(() => {
-    Api.get("certificate/certificatelist").then((res) =>
-      setCertificates(res.data)
-    );
-  }, [portfolioOwnerId]);
+    const isMe = user?.id === portfolioOwnerId;
+    Api.get(
+      `certificate/certificatelist${isMe ? "" : "/" + portfolioOwnerId}`
+    ).then((res) => setCertificates(res.data));
+  }, [portfolioOwnerId, user]);
 
   return (
     <Card>

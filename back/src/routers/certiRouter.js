@@ -52,7 +52,7 @@ certiRouter.put("/edit", login_required, async (req, res, next) => {
       description,
       when_date
     }
-
+    // console.log(1)
     const editCerti = await certiService.editCerti({user_id, toUpdate, id})
     
     // res.status(200).json("Hello");
@@ -74,6 +74,19 @@ certiRouter.delete("/delete/:id", login_required, async (req, res, next) => {
     const deleteResult = await certiService.deleteCerti({user_id, id})
     // res.status(200).json("hello") 
     res.status(200).json(deleteResult);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+//5. 네트워크 정보 전체 조회
+certiRouter.get("/certificatelist/:id", login_required, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    const certiList = await certiService.getCertificateId({ id });
+    res.status(200).json(certiList);
   } catch (error) {
     next(error);
   }

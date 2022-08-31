@@ -9,6 +9,7 @@ class Comment {
   }
 
 
+
   static async findByCommentedID({currentPageUserID}){
     console.log(currentPageUserID)
     const comment_this = await CommentModel.find({commentedID : currentPageUserID});
@@ -29,6 +30,22 @@ class Comment {
     const comment_this = await CommentModel.updateOne({id : commentID}, fixedData)
     return comment_this
   }
+
+
+//   static async fixOneAward({filter, data}){
+//     console.log(filter)
+//     console.log(data)
+//     const fixedAward = await AwardModel.updateOne({id : filter}, data)
+//     console.log(fixedAward)
+//     return fixedAward
+//   }
+//   static async deleteOneAward({awardID}){
+//     console.log('deleteOne 작동')
+//     const deleteAward = await AwardModel.deleteOne({id:awardID})
+//     console.log(deleteAward)
+//     return deleteAward
+//   }
+
 }
 
 export { Comment };

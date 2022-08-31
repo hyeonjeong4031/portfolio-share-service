@@ -21,6 +21,7 @@ function Award({ key, award, setAwards, isEditable }) {
           award={award}
           isEditable={isEditable}
           setIsEditing={setIsEditing}
+          setAwards={setAwards}
         />
       )}
     </>

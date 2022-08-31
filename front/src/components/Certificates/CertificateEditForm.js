@@ -28,7 +28,7 @@ const CertificateEditForm = ({
     }
     setErrMsg("");
     try {
-      await Api.put("certificate/edit/", {
+      await Api.put("certificate/edit", {
         id: formData.id,
         title: formData.title,
         description: formData.description,

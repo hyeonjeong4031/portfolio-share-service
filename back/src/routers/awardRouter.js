@@ -15,7 +15,7 @@ router.get('/',(req,res,next)=>{
 //수상 이력 등록 api
 router.post('/add', login_required,   async (req,res,next)=>{
     try{
-        console.log(req)
+        console.log("수상이력 추가")
         const user_id = req.currentUserId;
         const awardTitle = req.body.title;
         const awardDescription = req.body.description;
@@ -53,6 +53,7 @@ router.get('/readAll', login_required, async(req,res,next)=>{
 router.get('/readAll/:id', login_required, async(req,res,next)=>{
     //id는 url에서 받아오지만 로그인 하지 않은 사용자가 요청하면 안될거 같아서 login_required를 제거하지 않음
     try{
+        console.log('네트워크 - 다른 유저 award 읽어오기')
         const user_id = req.params.id; //사용자의 아이디를 url에서 받아옴
         const userAward = await awardService.readAllAward({writer : user_id})
         if (userAward.errorMessage) {

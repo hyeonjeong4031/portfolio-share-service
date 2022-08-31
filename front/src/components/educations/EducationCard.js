@@ -22,7 +22,7 @@ const EducationCard = ({
   return (
     <Card.Text>
       <Row className="align-items-center">
-        <Col xs={9} className="text-start">
+        <Col className="text-start">
           <span>{education.school}</span>
           <br />
           <span className="text-muted">{`${education.major} (${
@@ -33,7 +33,8 @@ const EducationCard = ({
         {isEditable && (
           <Col>
             <Row>
-              <Col>
+              <Col sm="8"></Col>
+              <Col sm="2">
                 <Button
                   variant="outline-info"
                   size="sm"
@@ -44,7 +45,7 @@ const EducationCard = ({
                 </Button>
               </Col>
 
-              <Col>
+              <Col sm="2">
                 <Button
                   onClick={() => educationtDelete()}
                   variant="outline-danger"
