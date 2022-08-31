@@ -8,10 +8,7 @@ const Educations = ({ portfolioOwnerId, isEditable }) => {
   const [educations, setEducations] = useState([]);
 
   useEffect(() => {
-    if (!portfolioOwnerId) {
-      return;
-    }
-    Api.get("education/educationlist").then((res) => {
+    Api.get(`education/educationlist/${portfolioOwnerId}`).then((res) => {
       setEducations(res.data);
     });
   }, [portfolioOwnerId]);

@@ -33,8 +33,8 @@ const EducationCard = ({
         {isEditable && (
           <Col>
             <Row>
-              <Col md="8"></Col>
-              <Col md="2">
+              <Col sm="8"></Col>
+              <Col sm="2">
                 <Button
                   variant="outline-info"
                   size="sm"
@@ -44,7 +44,8 @@ const EducationCard = ({
                   편집
                 </Button>
               </Col>
-              <Col md="2">
+
+              <Col sm="2">
                 <Button
                   onClick={() => educationtDelete()}
                   variant="outline-danger"
