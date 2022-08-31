@@ -22,9 +22,11 @@ class Comment {
     return comment_this;
   }
 
-  static async fixOneComment({commentID, description}){
+  static async fixOneComment({commentID, fixedData}){
     console.log('방명록 수정 model')
-    const comment_this = await CommentModel.updateOne({id : commentID}, {description: description})
+    console.log(commentID, "COMMENTID")
+    console.log(fixedData, "DATA!!!!!!!!!!")
+    const comment_this = await CommentModel.updateOne({id : commentID}, fixedData)
     return comment_this
   }
 }

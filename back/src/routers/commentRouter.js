@@ -62,13 +62,14 @@ router.put('/fix/:commentID', login_required, async(req,res,next)=>{
             }
             else{
                 const fixedDescription = req.body.description;
+                console.log(fixedDescription, "DESCRIPTION!!!!!!!!!!")
                 const result = await commentService.fixComment({commentID, fixedDescription})
                 console.log("service에서 최종 리턴값 돌아옴",result)
                 if(result.matchedCount == 0){
                     res.status(205).send({errorMessage : "오류가 발생했습니다"})
                 }
                 else
-                {res.status(200).send(result)}
+                {res.status(200).send({Message : "수정 성공"})}
             }
     }
     }
