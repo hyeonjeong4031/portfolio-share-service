@@ -58,7 +58,7 @@ static async deleteCerti({id}){
 
 
 
-
+ 
 
 }
 
