@@ -47,23 +47,25 @@ class certiService{
     //3. edit
     //user_id랑 게시물의 user_id, id랑 게시글의 id 확인
     static async editCerti({user_id, toUpdate, id}){
+        console.log("id:",id)
+        console.log("user_id:",user_id)
         // console.log(2)
 
        const CertiData1 = await Certificate.getCerti({user_id})
        const CertiData2 = await Certificate.getCertiId({id})
        //     return
-    //    console.log("!!!!!!!!!!",CertiData2)
+       console.log("!!!!!!!!!!",CertiData2)
        // }
-       let editCerti = await CertiData2[0]
-    //    console.log("serviceData:",toUpdate)
-    //    console.log("DATA1,",CertiData1[0].user_id)
-    //    console.log(" DATA2:",CertiData2[0].id)
+       let editCerti = await CertiData2
+       console.log("serviceData:",toUpdate)
+       console.log("DATA1,",CertiData1[0].user_id)
+       console.log(" DATA2:",CertiData2.id)
     //    console.log("id:",id)
        if(user_id !== CertiData1[0].user_id){
            const errorMessage = "User_id does not match "
            return errorMessage
        }
-       if(id !== CertiData2[0].id){
+       if(id !== CertiData2.id){
            const errorMessage = "Certificate_id does not match "
            return errorMessage
        }
@@ -112,7 +114,7 @@ class certiService{
         // console.log("!!!!!!!!!!")
         // console.log("해당 포스트의 유저id", getpost[0].user_id)
         // console.log("user_id", user_id)
-        if(user_id !== getpost[0].user_id){
+        if(user_id !== getpost.user_id){
             const errorMessage = "No authorization to delete this certificate"
             return errorMessage
         }

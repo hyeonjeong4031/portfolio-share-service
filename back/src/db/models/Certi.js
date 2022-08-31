@@ -10,15 +10,15 @@ class Certificate{
  
     static async getCerti({user_id}){
         const certificates = await certiModel.find({user_id})
-        // console.log("🐰user_id",certificates)
+        console.log("모델 자격증 유저아이디로 찾기user_id",certificates)
 
         return certificates
     }
     static async getCertiId({id}){
-        // console.log("🐰id:",id)
-        const certificates = await certiModel.find({user_id:id})
+        console.log("모델 자격증 id:",id)
+        const certificates = await certiModel.findOne({id})
         
-        // console.log("🐰id:",certificates)
+        console.log("모델 자격증 id로 찾기id:",certificates)
         return certificates
     }
 
