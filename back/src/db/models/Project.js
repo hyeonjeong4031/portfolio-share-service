@@ -41,6 +41,16 @@ class Project {
 
     return "Deleting project success";
   }
+
+  //deleteProjectImg
+  static async deleteProjectImg({ project_id }) {
+    const project = await ProjectModel.findOne({ id: project_id });
+
+    project.image = undefined;
+    await project.save();
+
+    return project;
+  }
 }
 
 export { Project };

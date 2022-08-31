@@ -2,6 +2,7 @@ import { Project } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class ProjectService {
+  //create
   static async addProject({ title, description, startDate, endDate, user_id }) {
     const id = uuidv4();
     const newProject = {
@@ -19,11 +20,13 @@ class ProjectService {
     return createdNewProject;
   }
 
+  //get
   static async getProjects({ user_id }) {
     const projects = await Project.getProjectsByUserId({ user_id });
     return projects;
   }
 
+  //update
   static async setProject({ project_id, toUpdate, user_id }) {
     let project = await Project.getProjectByProjectId({ project_id });
 
@@ -71,6 +74,16 @@ class ProjectService {
       });
     }
 
+    if (toUpdate.img) {
+      const fieldToUpdate = "image";
+      const newValue = toUpdate.img;
+      project = await Project.updateProject({
+        project_id,
+        fieldToUpdate,
+        newValue,
+      });
+    }
+
     return project;
   }
 
@@ -88,6 +101,30 @@ class ProjectService {
     const projctList = await Project.getProjectsByUserId({ user_id });
 
     return projctList;
+  }
+
+  //image get
+  static async getProjectImg({ project_id }) {
+    const project = await Project.getProjectByProjectId({ project_id });
+
+    if (!project.image) {
+      throw new Error("No image");
+    }
+
+    return project;
+  }
+
+  //image delete
+  static async removeProjectImg({ project_id, user_id }) {
+    const project = await Project.getProjectByProjectId({ project_id });
+
+    if (project.userId !== user_id) {
+      throw new Error("No authorization to delete this image");
+    }
+
+    const removedImgProject = await Project.deleteProjectImg({ project_id });
+
+    return removedImgProject;
   }
 }
 
