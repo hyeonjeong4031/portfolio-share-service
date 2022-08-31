@@ -150,7 +150,7 @@ projectRouter.get("/project/:projectId/image", async function (req, res, next) {
 projectRouter.put(
   "/project/:projectId/image",
   login_required,
-  upload.single("upload"),
+  upload.single("image"),
   async function (req, res, next) {
     try {
       const img = req.file.buffer;
