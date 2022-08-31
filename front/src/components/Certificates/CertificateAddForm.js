@@ -70,7 +70,7 @@ const CertificateAddForm = ({
         <Col className="col-auto">
           <Form.Control
             type="date"
-            name="whenDate"
+            name="when_date"
             value={formData.when_date}
             onChange={handleChange}
           />
