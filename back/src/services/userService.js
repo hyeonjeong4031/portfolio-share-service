@@ -7,6 +7,7 @@ class userAuthService {
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
+    console.log("🐰1.5:",user)
     // console.log("🐰1.5:",user.withdrawal)
 //false인데 왜 if문이작동이 안함?
     if (user ) {
@@ -19,7 +20,7 @@ class userAuthService {
     //withdrawal=true =>탈퇴한거니까ㅜ 유저가 없다고 생각하기
     //근데 post 로직이라 정보 추간데 지금 하려는건 put
     //service 내용 따로 빼서 구현해야할듯?
-    console.log("🐰2:")
+    // console.log("🐰2:")
 
 
     // 비밀번호 해쉬화

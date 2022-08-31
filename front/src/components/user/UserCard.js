@@ -29,6 +29,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                 >
                   편집
                 </Button>
+                
               </Col>
             </Row>
           </Col>
