@@ -70,7 +70,6 @@ function Portfolio() {
               isEditable={portfolioOwner.id === userState.user?.id}
             ></Projects>
           </div>
-          cd back
           <div>
             <div class="col">
               <Awards
