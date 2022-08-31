@@ -15,7 +15,7 @@ router.get('/',(req,res,next)=>{
 //수상 이력 등록 api
 router.post('/add', login_required,   async (req,res,next)=>{
     try{
-        console.log(req)
+        console.log("수상이력 추가")
         const user_id = req.currentUserId;
         const awardTitle = req.body.title;
         const awardDescription = req.body.description;
