@@ -12,8 +12,9 @@ class User {
     //   return
     // }
     console.log("🐰1:",user.length)
+    console.log("🐰1:",user[user.length-1])
 
-    return user[0];
+    return user[user.length-1];
   }
 
   static async findById({ user_id }) {
