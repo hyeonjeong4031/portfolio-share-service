@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Card, Col, Row } from "react-bootstrap";
+import { Modal, Button, Form, Card, Col, Row, Toast } from "react-bootstrap";
 import * as Api from "../../api";
 
 import { useNavigate } from "react-router-dom";
@@ -13,10 +13,10 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
   const [modalShow, setModalShow] = useState(false);
-
+  const [withdrawal, setWithdrawal] = useState(false);
   // const navigate = useNavigate(); 힝(지원)
 
-  const ConfirmModal = () => {
+  function ConfirmModal() {
     return (
       <Modal show={modalShow} onHide={modalShow}>
         <Modal.Header closeButton>
@@ -39,7 +39,20 @@ function UserEditForm({ user, setIsEditing, setUser }) {
         </Modal.Footer>
       </Modal>
     );
-  };
+  }
+
+  function CompleteModal() {
+    return (
+      <Modal show={withdrawal} onHide={withdrawal}>
+        <Modal.Header>
+          <Modal.Title>회원 탈퇴</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          탈퇴가 완료되었습니다. 3초후 로그인 화면으로 이동합니다.
+        </Modal.Body>
+      </Modal>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,9 +80,10 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     });
     console.log(res);
     if (res.status == 200) {
-      navigate("login", { replace: true });
+      setModalShow(false);
+      setWithdrawal(true);
+      setTimeout(() => navigate("login", { replace: true }), 3000);
     }
-    // .then( navigate("/", { replace: true })) 탈퇴하면 로그인페이지로 돌아가게 하고 싶어요(지원)
   };
 
   return (
@@ -111,6 +125,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 탈퇴
               </Button>
               <ConfirmModal />
+              <CompleteModal />
             </Col>
           </Form.Group>
         </Form>
