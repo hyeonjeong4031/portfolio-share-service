@@ -5,6 +5,7 @@ import { userAuthService } from "../services/userService";
 
 const userAuthRouter = Router();
 
+
 userAuthRouter.post("/user/register", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
@@ -43,6 +44,8 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
    
     // 위 데이터를 이용하여 유저 db에서 유저 찾기
     const user = await userAuthService.getUser({ email, password });
+    console.log("router",user)
+
     console.log(user)
     if (user.errorMessage) {
       throw new Error(user.errorMessage);
@@ -140,6 +143,24 @@ userAuthRouter.get(
     }
   }
 );
+
+userAuthRouter.put("/withdrawal",
+    login_required, 
+    async function (req, res, next){
+      try {
+        const withdrawal = req.body.withdrawal??null
+        const user_id = req.currentUserId
+        const id = req.body.id;
+        const idStatus = await userAuthService.userWithdrawal({user_id, id, withdrawal})
+
+
+        // res.status(200).json("🐰")
+        res.status(200).json(idStatus)
+
+      } catch (error) {
+        next(error)
+      }
+})
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {

@@ -22,7 +22,7 @@ const EducationCard = ({
   return (
     <Card.Text>
       <Row className="align-items-center">
-        <Col>
+        <Col xs={9} className="text-start">
           <span>{education.school}</span>
           <br />
           <span className="text-muted">{`${education.major} (${
@@ -31,28 +31,32 @@ const EducationCard = ({
         </Col>
 
         {isEditable && (
-          <Col xs lg="1">
-            <Button
-              variant="outline-info"
-              size="sm"
-              onClick={() => setIsEditing((prev) => !prev)}
-              className="mr-3"
-            >
-              편집
-            </Button>
+          <Col>
+            <Row>
+              <Col>
+                <Button
+                  variant="outline-info"
+                  size="sm"
+                  onClick={() => setIsEditing((prev) => !prev)}
+                  className="mr-3"
+                >
+                  편집
+                </Button>
+              </Col>
+
+              <Col>
+                <Button
+                  onClick={() => educationtDelete()}
+                  variant="outline-danger"
+                  size="sm"
+                  className="ml-3"
+                >
+                  삭제
+                </Button>
+              </Col>
+            </Row>
           </Col>
         )}
-
-        <Col xs lg="1">
-          <Button
-            onClick={() => educationtDelete()}
-            variant="outline-danger"
-            size="sm"
-            className="mr-3"
-          >
-            삭제
-          </Button>
-        </Col>
       </Row>
     </Card.Text>
   );
