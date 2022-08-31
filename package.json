@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "mongoose-auto-increment": "^5.0.1"
+    "form-data": "^4.0.0",
+    "mongoose-auto-increment": "^5.0.1",
+    "request": "^2.88.2"
   }
 }

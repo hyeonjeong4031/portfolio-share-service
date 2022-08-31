@@ -11,28 +11,57 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     endDate: currentProject.endDate.substring(0, 10),
   });
   const [errMsg, setErrMsg] = useState("");
+  const [imageFile, setImageFile] = useState();
+
+  // 파일 사이즈 제한(2MB) 검증
+  const validateFile = (e) => {
+    const newImageFile = e.target.files[0];
+    if (newImageFile && newImageFile.size > 1000 * 2000) {
+      setErrMsg("파일 크기는 2MB를 넘을 수 없습니다.");
+      e.target.value = "";
+    } else {
+      setErrMsg("");
+      setImageFile(newImageFile);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
     if (!formData.title) {
       setErrMsg("프로젝트 제목을 입력해 주세요.");
-    } else if (!formData.description) {
+      return;
+    }
+    if (!formData.description) {
       setErrMsg("프로젝트 상세 내역을 입력해 주세요.");
-    } else if (formData.startDate > formData.endDate) {
+      return;
+    }
+    if (formData.startDate > formData.endDate) {
       setErrMsg("시작 날짜는 종료 날짜 이전이어야 합니다.");
-    } else {
-      setErrMsg("");
-      try {
-        console.log(formData);
-        await Api.put("project", formData);
+      return;
+    }
+    try {
+      // update project info
+      console.log(formData);
+      await Api.put("project", formData);
 
-        const res = await Api.get("project", currentProject.userId);
-        setProjects(res.data);
-        setIsEditing(false);
-      } catch (err) {
-        console.log(err);
+      // update image
+      if (imageFile) {
+        const imageData = new FormData();
+        imageData.append("image", imageFile);
+
+        const response = await Api.fileUpload(
+          `project/${currentProject.id}/image`,
+          imageData
+        );
+        console.log(response);
       }
+
+      const res = await Api.get("project", currentProject.userId);
+      setProjects(res.data);
+      setIsEditing(false);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -55,11 +84,19 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
       </Form.Group>
       <Form.Group className="mt-3" controlId="projectAddDescription">
         <Form.Control
-          type="text"
+          as="textarea"
           name="description"
           value={formData.description}
           placeholder="상세 내역"
           onChange={handleChange}
+        />
+      </Form.Group>
+      <Form.Group className="mt-3" controlId="projectAddImage">
+        <Form.Control
+          type="file"
+          name="image"
+          onChange={validateFile}
+          accept="image/png, image/jpeg"
         />
       </Form.Group>
       <Form.Group className="mt-3" as={Row} controlId="projectAddDate">
