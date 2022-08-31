@@ -53,13 +53,23 @@ router.put('/fix/:commentID', login_required, async(req,res,next)=>{
             res.status(200).send(findComment)
         }
         else{
-            if(findComment.writerUserID != currentUser){
+            if(findComment.writer_id != currentUser){
+                console.log("write_id",findComment.writer_id )
+                console.log("currentUser", currentUser)
                 res.status(205).send({
                     errorMessage : "권한이 없습니다"
                 })
             }
             else{
-        res.status(200).send('dd')}
+                const fixedDescription = req.body.description;
+                const result = await commentService.fixComment({commentID, fixedDescription})
+                console.log("service에서 최종 리턴값 돌아옴",result)
+                if(result.matchedCount == 0){
+                    res.status(205).send({errorMessage : "오류가 발생했습니다"})
+                }
+                else
+                {res.status(200).send(result)}
+            }
     }
     }
     catch(error){

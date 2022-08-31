@@ -51,6 +51,13 @@ class commentService {
         return result
     }
     
+    static async fixComment({commentID, description}){
+        console.log('commet 수정 요청까지 들어감');
+        const result = await Comment.fixOneComment({commentID, description})
+        result.errorMessage = null
+        return result
+
+    }
 }
 
 export {commentService}
