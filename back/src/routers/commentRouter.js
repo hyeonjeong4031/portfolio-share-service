@@ -38,9 +38,33 @@ router.get('/readComment/:id',login_required, async(req,res,next)=>{
         res.status(200).send(result)
     }
     catch(error){
-
+        next(error)
     }
 })
 
+router.put('/fix/:commentID', login_required, async(req,res,next)=>{
+    try{
+        console.log('fix Router work start')
+        const currentUser = req.currentUserId;
+        const commentID = req.params.commentID;
+        console.log('params', commentID)
+        const findComment = await commentService.findCommentByCommentID({commentID});
+        if(findComment.errorMessage){
+            res.status(200).send(findComment)
+        }
+        else{
+            if(findComment.writerUserID != currentUser){
+                res.status(205).send({
+                    errorMessage : "권한이 없습니다"
+                })
+            }
+            else{
+        res.status(200).send('dd')}
+    }
+    }
+    catch(error){
+        next(error)
+    }
+})
 
 module.exports = router

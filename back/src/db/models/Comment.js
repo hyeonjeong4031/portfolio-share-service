@@ -10,17 +10,18 @@ class Comment {
 
 
   static async findByCommentedID({currentPageUserID}){
+    console.log(currentPageUserID)
     const award_this = await CommentModel.find({commentedID : currentPageUserID});
     return award_this;
   }
 
-//   static async fixOneAward({filter, data}){
-//     console.log(filter)
-//     console.log(data)
-//     const fixedAward = await AwardModel.updateOne({id : filter}, data)
-//     console.log(fixedAward)
-//     return fixedAward
-//   }
+  static async findByID({commentID}){
+    console.log('model에 값 전달 확인',commentID)
+    const award_this = await CommentModel.findOne({
+      id : commentID});
+    return award_this;
+  }
+
 //   static async deleteOneAward({awardID}){
 //     console.log('deleteOne 작동')
 //     const deleteAward = await AwardModel.deleteOne({id:awardID})
