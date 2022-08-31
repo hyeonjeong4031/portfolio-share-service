@@ -7,7 +7,7 @@ class Certificate{
                 return createOne
     }
 
-
+ 
     static async getCerti({user_id}){
         const certificates = await certiModel.find({user_id})
         // console.log("🐰user_id",certificates)
