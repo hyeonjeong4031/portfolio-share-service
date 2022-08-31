@@ -1,18 +1,45 @@
 import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
+import { Modal, Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-// import {useNavigate} from "react-router-dom" navigate로 로그인페이지 가게 하는게 맞나.?(지원)
+import { useNavigate } from "react-router-dom";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
+  const navigate = useNavigate();
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
+  const [modalShow, setModalShow] = useState(false);
 
   // const navigate = useNavigate(); 힝(지원)
+
+  const ConfirmModal = () => {
+    return (
+      <Modal show={modalShow} onHide={modalShow}>
+        <Modal.Header closeButton>
+          <Modal.Title>회원 탈퇴</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>정말로 탈퇴하시겠습니까?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={(e) => {
+              e.preventDefault();
+              setModalShow(false);
+            }}
+          >
+            취소
+          </Button>
+          <Button variant="danger" onClick={handleWithdraw}>
+            확인
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,14 +59,18 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     setIsEditing(false);
   };
 
-  const handleWithdraw = async(e)=>{
+  const handleWithdraw = async (e) => {
     e.preventDefault();
 
-    await Api.put(`withdrawal/${user.id}`,{
-      withdrawal:true
-    })
+    const res = await Api.put(`withdrawal/${user.id}`, {
+      withdrawal: true,
+    });
+    console.log(res);
+    if (res.status == 200) {
+      navigate("login", { replace: true });
+    }
     // .then( navigate("/", { replace: true })) 탈퇴하면 로그인페이지로 돌아가게 하고 싶어요(지원)
-  }
+  };
 
   return (
     <Card className="mb-2">
@@ -69,16 +100,18 @@ function UserEditForm({ user, setIsEditing, setUser }) {
               <Button variant="primary" type="submit" className="me-3">
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
+              <Button
+                variant="secondary"
+                className="me-3"
+                onClick={() => setIsEditing(false)}
+              >
                 취소
               </Button>
+              <Button variant="danger" onClick={() => setModalShow(true)}>
+                탈퇴
+              </Button>
+              <ConfirmModal />
             </Col>
-            <Col>
-            <Button variant="danger"
-                  size="sm"
-                  onClick={handleWithdraw}>
-                  탈퇴
-                </Button></Col>
           </Form.Group>
         </Form>
       </Card.Body>
