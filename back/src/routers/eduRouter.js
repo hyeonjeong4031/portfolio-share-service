@@ -126,3 +126,5 @@ eduRouter.delete(
 //     }
 //   }
 // );
+
+export {eduRouter}
