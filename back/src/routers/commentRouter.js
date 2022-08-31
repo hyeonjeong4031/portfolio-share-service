@@ -78,5 +78,37 @@ router.put('/fix/:commentID', login_required, async(req,res,next)=>{
     }
 })
 
+router.delete('/delete/:commentID', login_required, async (req,res,next)=>{
+    try{
+        console.log('delete실행');
+        const currentUser = req.currentUserId;
+        const commentID = req.params.commentID;
+        console.log('params', commentID)
+        const findComment = await commentService.findCommentByCommentID({commentID});
+        if(findComment.errorMessage){
+            res.status(200).send(findComment)
+        }
+        else{
+            if(findComment.writer_id != currentUser){
+                console.log("write_id",findComment.writer_id )
+                console.log("currentUser", currentUser)
+                res.status(205).send({
+                    errorMessage : "권한이 없습니다"
+                })
+            }
+            else{
+                //권한이 확인되었으니까 삭제 들어감
+                const deletComment = await commentService.deleteComment(commentID)
+                if(deletComment.deletedCount == 0){res.status(205).send({Message : "삭제 실패"})}
+                else{
+                res.status(200).send({Message : "삭제 성공"})}
+            }
+    }
+    }
+    catch(error){
+        next(error)
+    }
+})
+
 
 module.exports = router

@@ -65,6 +65,11 @@ class commentService {
 
     }
 
+    static async deleteComment(commentID){
+        console.log('comment SErvice Delete >>>', commentID)
+        const result = await Comment.deleteOneComment(commentID);
+        return result
+    }
 }
 
 export {commentService}

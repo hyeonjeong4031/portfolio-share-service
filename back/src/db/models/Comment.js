@@ -31,20 +31,12 @@ class Comment {
     return comment_this
   }
 
+  static async deleteOneComment(commentID){
+    console.log('delet 모데ㄹ', commentID)
+    const comment_this = await CommentModel.deleteOne({id : commentID});
+    return comment_this
+  }
 
-//   static async fixOneAward({filter, data}){
-//     console.log(filter)
-//     console.log(data)
-//     const fixedAward = await AwardModel.updateOne({id : filter}, data)
-//     console.log(fixedAward)
-//     return fixedAward
-//   }
-//   static async deleteOneAward({awardID}){
-//     console.log('deleteOne 작동')
-//     const deleteAward = await AwardModel.deleteOne({id:awardID})
-//     console.log(deleteAward)
-//     return deleteAward
-//   }
 
 }
 
