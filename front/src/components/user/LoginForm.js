@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import { Alert, Container, Col, Row, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
@@ -22,7 +22,7 @@ function LoginForm() {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
-
+  const [userValidation, setUserValidation] = useState();
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
@@ -42,6 +42,7 @@ function LoginForm() {
       });
       // 유저 정보는 response의 data임.
       const user = res.data;
+
       // JWT 토큰은 유저 정보의 token임.
       const jwtToken = user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
@@ -55,7 +56,7 @@ function LoginForm() {
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
     } catch (err) {
-      console.log("로그인에 실패하였습니다.\n", err);
+      setUserValidation("존재하지 않는 계정입니다.");
     }
   };
 
@@ -93,7 +94,9 @@ function LoginForm() {
                 </Form.Text>
               )}
             </Form.Group>
-
+            <Col className="mt-4 mb-4">
+              {userValidation && <Alert vairant="info">{userValidation}</Alert>}
+            </Col>
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
                 <Button variant="primary" type="submit" disabled={!isFormValid}>

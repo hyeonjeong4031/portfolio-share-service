@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import { Alert, Container, Col, Row, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
 
@@ -15,6 +15,8 @@ function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
+
+  const [errMsg, setErrMsg] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -52,7 +54,7 @@ function RegisterForm() {
       // 로그인 페이지로 이동함.
       navigate("/login");
     } catch (err) {
-      console.log("회원가입에 실패하였습니다.", err);
+      setErrMsg("이미 가입된 이메일입니다.");
     }
   };
 
@@ -120,6 +122,7 @@ function RegisterForm() {
                 </Form.Text>
               )}
             </Form.Group>
+            <Col className="mt-4 mb-4">{errMsg && <Alert>{errMsg}</Alert>}</Col>
 
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
@@ -128,7 +131,6 @@ function RegisterForm() {
                 </Button>
               </Col>
             </Form.Group>
-
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
                 <Button variant="light" onClick={() => navigate("/login")}>
