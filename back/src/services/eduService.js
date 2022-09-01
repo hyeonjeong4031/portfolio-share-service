@@ -34,7 +34,6 @@ class eduService{
     }  
     
   //2. 본인 학력정보 조회  
-    //네트워크페이지에서 유저 정보 호출시 같이 나오도록 하는 서비스
     static async getEduinfo({user_id}){
         console.log("user_id:",{user_id})
         console.log("user_id:",user_id)
@@ -105,19 +104,39 @@ class eduService{
     }  
 
 // //4.삭제
-// static async deleteEdu({id, user_id}){
-//     let user = await Edu.findAllEdu(user_id); 
-// console.log(user.user_id)
-//     if(user_id !==user.user_id){
-//         const errorMessage  = "본인의 포스트가 아님"
-//         return {errorMessage}
-//     }
+static async deleteEdu({id, user_id}){
+    let delEdu = await Edu.findById({id}); 
+    console.log(user_id)
+    if(user_id !== delEdu[0].user_id){
+            const errorMessage  = "본인의 포스트가 아님"
+            return {errorMessage}
+
+    }
+     await Edu.deleteEdu({id})
+    const Edulist = await Edu.findAllEdu(user_id)
+    return Edulist
 
 
 }
 
 
 
+static async getEduNet({id}){
+    console.log("user_id!!!!!!!!!:",id)
+    // console.log(typeof(user_id))
+
+    if(!id){
+        const errorMessage  = "정보를 조회할 대상이 없음"
+        return {errorMessage}
+    }
+
+const alledu = await Edu.findAllEdu(id);
+    return alledu
+}
+
+
+
+}
 
 
 export {eduService}

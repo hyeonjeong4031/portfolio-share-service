@@ -16,6 +16,7 @@ const Education = ({ education, setEducations, isEditable }) => {
         <EducationCard
           education={education}
           isEditable={isEditable}
+          setEducations={setEducations}
           setIsEditing={setIsEditing}
         />
       )}

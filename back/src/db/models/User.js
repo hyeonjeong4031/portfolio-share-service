@@ -7,8 +7,14 @@ class User {
   }
 
   static async findByEmail({ email }) {
-    const user = await UserModel.findOne({ email });
-    return user;
+    const user = await UserModel.find({ email });
+    // if(user.withdrawal){
+    //   return
+    // }
+    console.log("🐰1:",user.length)
+    console.log("🐰1:",user[user.length-1])
+
+    return user[user.length-1];
   }
 
   static async findById({ user_id }) {

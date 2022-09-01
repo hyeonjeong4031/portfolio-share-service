@@ -7,16 +7,26 @@ class Certificate{
                 return createOne
     }
 
-
+ 
     static async getCerti({user_id}){
         const certificates = await certiModel.find({user_id})
-        
+        console.log("모델 자격증 유저아이디로 찾기user_id",certificates)
+
         return certificates
     }
     static async getCertiId({id}){
-        const certificates = await certiModel.find({id})
+        console.log("모델 자격증 id:",id)
+        const certificates = await certiModel.findOne({id})
         
-
+        console.log("모델 자격증 id로 찾기id:",certificates)
+        return certificates
+    }
+    static async CertiIdUserId({id}){
+        console.log("모델 자격증 id:",id)
+        const certificates = await certiModel.find({user_id:id})
+        
+        console.log("모델 자격증 id로 찾기id:",certificates)
+        console.log("왜 null 일까???:",certificates)
         return certificates
     }
 
@@ -48,7 +58,7 @@ static async deleteCerti({id}){
 
 
 
-
+ 
 
 }
 

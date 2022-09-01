@@ -15,7 +15,7 @@ router.get('/',(req,res,next)=>{
 //수상 이력 등록 api
 router.post('/add', login_required,   async (req,res,next)=>{
     try{
-        console.log(req)
+        console.log("수상이력 추가")
         const user_id = req.currentUserId;
         const awardTitle = req.body.title;
         const awardDescription = req.body.description;
@@ -53,6 +53,7 @@ router.get('/readAll', login_required, async(req,res,next)=>{
 router.get('/readAll/:id', async(req,res,next)=>{
     //그냥 id값을 통해 데이터를 넘겨주는 것은 굳이 id가 필요한가 싶어서 그냥 login_required제거
     try{
+        console.log('네트워크 - 다른 유저 award 읽어오기')
         const user_id = req.params.id; //사용자의 아이디를 url에서 받아옴
         const userAward = await awardService.readAllAward({writer : user_id})
         if (userAward.errorMessage) {

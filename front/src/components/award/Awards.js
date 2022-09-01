@@ -10,10 +10,24 @@ function Awards({ portfolioOwnerId, isEditable }) {
   //useState로 isAdding 상태를 생성함.
   const [isAdding, setIsAdding] = useState(false);
 
+  
   useEffect(() => {
     // "awardlist/유저id"로 GET 요청하고, response의 data로 awards를 세팅함.
+    console.log("Awards쪽")
     Api.get("award/readAll", portfolioOwnerId).then((res) => setAwards(res.data));
   }, [portfolioOwnerId]);
+
+  // // 타 유저
+  // useEffect(() => {
+    
+  //   Api.get("award/readOtherUser", portfolioOwnerId).then((res) => {
+  //     console.log(res.data, "이거임")
+  //     setAwards(res.data)});
+  // }, [portfolioOwnerId]);
+    
+
+
+
 
   return (
     <Card>
@@ -27,7 +41,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
             isEditable={isEditable}
           />
         ))}
-        {(
+        {isEditable && (
           <Row className="mt-3 text-center mb-4">
             <Col sm={{ span: 20 }}>
               <Button onClick={() => setIsAdding(true)}>+</Button>

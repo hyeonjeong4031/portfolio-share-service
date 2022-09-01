@@ -1,6 +1,21 @@
+import React, { useState } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
+import * as Api from "../../api";
 
-function AwardCard({ award, isEditable, setIsEditing }) {
+function AwardCard({ award, setAwards, isEditable, setIsEditing }) {
+  const awardDelete = async () => {
+    try {
+      await Api.delete(`award/delete/${award.id}`);
+
+      const res = await Api.get("award/readAll");
+      console.log(res.data)
+      setAwards(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+  };
+  
+  
   return (
     <Card.Text>
       <Row className="align-items-center">
@@ -9,7 +24,7 @@ function AwardCard({ award, isEditable, setIsEditing }) {
           <br />
           <span className="text-muted">{award.description}</span>
         </Col>
-        {(
+        {isEditable && (
           <Col xs lg="1">
             <Button
               variant="outline-info"
@@ -20,6 +35,19 @@ function AwardCard({ award, isEditable, setIsEditing }) {
               편집
             </Button>
           </Col>
+        )}
+        {isEditable && (
+          <Col xs lg="1">
+          <Button
+            onClick={() => awardDelete()}
+            variant="outline-danger"
+            size="sm"
+            className="ml-3"
+          >
+            삭제
+          </Button>
+        </Col>
+
         )}
       </Row>
     </Card.Text>

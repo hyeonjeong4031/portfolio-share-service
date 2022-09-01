@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 
-const EducationCard = ({
-  education,
-  setEducations,
+const CertificateCard = ({
+  certificate,
+  setCertificates,
   isEditable,
   setIsEditing,
 }) => {
-  const educationtDelete = async () => {
+  const certificateDelete = async () => {
     try {
-      await Api.delete(`education/delete/${education.id}`);
+      await Api.delete(`certificate/delete/${certificate.id}`);
 
-      const res = await Api.get("education/educationlist");
-      setEducations(res.data);
+      const res = await Api.get("certificate/certificatelist");
+      setCertificates(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -23,18 +23,19 @@ const EducationCard = ({
     <Card.Text>
       <Row className="align-items-center">
         <Col className="text-start">
-          <span>{education.school}</span>
+          {certificate.title}
           <br />
-          <span className="text-muted">{`${education.major} (${
-            education.position || ""
-          })`}</span>
+          <span className="text-muted">{certificate.description}</span>
+          <br />
+          <span className="text-muted">
+            {certificate.when_date.substring(0, 10)}
+          </span>
         </Col>
-
         {isEditable && (
           <Col>
             <Row>
-              <Col sm="8"></Col>
-              <Col sm="2">
+              <Col md="8"></Col>
+              <Col md="2">
                 <Button
                   variant="outline-info"
                   size="sm"
@@ -45,9 +46,9 @@ const EducationCard = ({
                 </Button>
               </Col>
 
-              <Col sm="2">
+              <Col md="2">
                 <Button
-                  onClick={() => educationtDelete()}
+                  onClick={() => certificateDelete()}
                   variant="outline-danger"
                   size="sm"
                   className="ml-3"
@@ -63,4 +64,4 @@ const EducationCard = ({
   );
 };
 
-export default EducationCard;
+export default CertificateCard;

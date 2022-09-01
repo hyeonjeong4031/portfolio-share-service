@@ -47,21 +47,25 @@ class certiService{
     //3. edit
     //user_id랑 게시물의 user_id, id랑 게시글의 id 확인
     static async editCerti({user_id, toUpdate, id}){
+        console.log("id:",id)
+        console.log("user_id:",user_id)
+        // console.log(2)
+
        const CertiData1 = await Certificate.getCerti({user_id})
        const CertiData2 = await Certificate.getCertiId({id})
        //     return
+       console.log("!!!!!!!!!!",CertiData2)
        // }
-       let editCerti = await CertiData2[0]
-    //    console.log("serviceData:",toUpdate)
-    //    console.log("DATA1,",CertiData1[0].user_id)
-    //    console.log(" DATA2:",CertiData2[0].id)
+       let editCerti = await CertiData2
+       console.log("serviceData:",toUpdate)
+       console.log("DATA1,",CertiData1[0].user_id)
+       console.log(" DATA2:",CertiData2.id)
     //    console.log("id:",id)
-
        if(user_id !== CertiData1[0].user_id){
            const errorMessage = "User_id does not match "
            return errorMessage
        }
-       if(id !== CertiData2[0].id){
+       if(id !== CertiData2.id){
            const errorMessage = "Certificate_id does not match "
            return errorMessage
        }
@@ -84,8 +88,11 @@ class certiService{
                 newValue
             })
         }
+        // console.log("hello!!!!!!!")
+        // console.log(toUpdate.when_date)
+        
         if(toUpdate.when_date){
-            const fieldToUpdate = "when_data";
+            const fieldToUpdate = "when_date";
             const newValue = toUpdate.when_date;
             editCerti = await Certificate.editCerti({
                 id,
@@ -93,6 +100,7 @@ class certiService{
                 newValue
             }) 
         }
+        // console.log(toUpdate.when_date)
         // console.log(editCerti)
         return editCerti
 
@@ -106,8 +114,8 @@ class certiService{
         // console.log("!!!!!!!!!!")
         // console.log("해당 포스트의 유저id", getpost[0].user_id)
         // console.log("user_id", user_id)
-        if(user_id !== getpost[0].user_id){
-            const errorMessage = "user_id does not match"
+        if(user_id !== getpost.user_id){
+            const errorMessage = "No authorization to delete this certificate"
             return errorMessage
         }
         await Certificate.deleteCerti({id})
@@ -118,7 +126,18 @@ class certiService{
 
 
 
-    
+//     //5. network get
+    static async getCertificateId({id}){
+    console.log("Hey",id)
+
+        // if(!id){
+        //     return "user_id is required"
+        // }
+        const getCertilist = await Certificate.CertiIdUserId({id})
+        // console.log("?!!!" ,getCertilist)
+
+        return getCertilist
+    }
 
 
 };

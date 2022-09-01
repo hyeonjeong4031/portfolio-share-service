@@ -12,6 +12,13 @@ class Edu {
      const edu =await EduModel.findOne({user_id});
      return edu
  }
+ //id가 같은 edu항목 찾기
+ static async findById({id}){
+     const edu =await EduModel.find({id});
+   
+
+     return edu
+ }
 
  //전체 학력 조회
  static async findAllEdu(data){
@@ -39,7 +46,6 @@ class Edu {
 }
 
 static async deleteEdu({id}){
-    // console.log(EduModel.find({id}))
     const edulist =await EduModel.deleteOne({id: id});
     // console.log(edulist)
     return edulist
