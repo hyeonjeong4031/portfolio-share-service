@@ -26,6 +26,9 @@ const ProjectSchema = new Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: Buffer,
+    },
   },
   { timestamps: true }
 );

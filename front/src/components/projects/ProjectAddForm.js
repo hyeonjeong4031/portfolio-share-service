@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, Form, Col, Row, Button } from "react-bootstrap";
 import * as Api from "../../api";
+
+const FormData = require("form-data");
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   const [formData, setFormData] = useState({
@@ -11,27 +13,62 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   });
 
   const [errMsg, setErrMsg] = useState("");
+  const [imageFile, setImageFile] = useState();
+
+  // 파일 사이즈 제한(2MB) 검증
+  const validateFile = (e) => {
+    const newImageFile = e.target.files[0];
+    if (newImageFile && newImageFile.size > 1000 * 2000) {
+      setErrMsg("파일 크기는 2MB를 넘을 수 없습니다.");
+      e.target.value = "";
+    } else {
+      setErrMsg("");
+      setImageFile(newImageFile);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     if (!formData.title) {
       setErrMsg("프로젝트 제목을 입력해 주세요.");
-    } else if (!formData.description) {
+      return;
+    }
+    if (!formData.description) {
       setErrMsg("프로젝트 상세 내역을 입력해 주세요.");
-    } else if (formData.startDate > formData.endDate) {
+      return;
+    }
+    if (formData.startDate > formData.endDate) {
       setErrMsg("시작 날짜는 종료 날짜 이전이어야 합니다.");
-    } else {
-      setErrMsg("");
-      try {
-        await Api.post("project", formData);
+      return;
+    }
 
-        const res = await Api.get("project", portfolioOwnerId);
-        setProjects(res.data);
-        setIsAdding(false);
-      } catch (err) {
-        console.log(err);
+    try {
+      // 프로젝트 정보 등록
+      const newProject = await Api.post("project", {
+        title: formData.title,
+        description: formData.description,
+        startDate: formData.startDate,
+        endDate: formData.endDate,
+      });
+
+      // image 추가 등록
+      if (imageFile) {
+        const imageData = new FormData();
+        imageData.append("image", imageFile);
+
+        const response = await Api.fileUpload(
+          `project/${newProject.data.id}/image`,
+          imageData
+        );
+        console.log(response);
       }
+
+      // 프로젝트 리스트 불러오기
+      const res = await Api.get("project", portfolioOwnerId);
+      setProjects(res.data);
+      setIsAdding(false);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -54,11 +91,19 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
       </Form.Group>
       <Form.Group className="mt-3" controlId="projectAddDescription">
         <Form.Control
-          type="text"
+          as="textarea"
           name="description"
           value={formData.description}
           placeholder="상세 내역"
           onChange={handleChange}
+        />
+      </Form.Group>
+      <Form.Group className="mt-3" controlId="projectAddImage">
+        <Form.Control
+          type="file"
+          name="image"
+          onChange={validateFile}
+          accept="image/png, image/jpeg"
         />
       </Form.Group>
       <Form.Group className="mt-3" as={Row} controlId="projectAddDate">

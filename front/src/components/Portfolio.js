@@ -64,32 +64,30 @@ function Portfolio() {
           />
         </Col>
         <Col>
-          <div style={{ textAlign: "center" }}>
+          <Col className="mb-3">
             <Projects
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             ></Projects>
-          </div>
-          <div>
-            <div class="col">
-              <Awards
-                portfolioOwnerId={portfolioOwner.id}
-                isEditable={portfolioOwner.id === userState.user?.id}
-              />
-            </div>
-          </div>
-          <div>
+          </Col>
+          <Col className="mb-3">
+            <Awards
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </Col>
+          <Col className="mb-3">
             <Educations
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
-          </div>
-          <div>
+            </Col>
+          <Col className="mb-3">
             <Certificates
               portfolioOwnerId={portfolioOwner.id}
-              isEditable={portfolioOwner.id === userState.user?.id}
+              isEditable={portfolioOwner.id === userState.user?.id}          
             />
-          </div>
+            </Col>
         </Col>
       </Row>
     </Container>
