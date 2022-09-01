@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Col, Row } from "react-bootstrap";
+import { Alert, Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
@@ -8,6 +8,8 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(currentAward.description);
 
+  const [errMsg, setErrMsg] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -15,19 +17,31 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     // currentAward의 user_id를 user_id 변수에 할당함.
     const user_id = currentAward.user_id;
 
-    // "awards/수상 id" 엔드포인트로 PUT 요청함.
-    await Api.put(`award/fix/${currentAward.id}`, {
-      title,
-      description
-    });
+    if (!title) {
+      setErrMsg("수상 내역을 입력해 주세요.");
+      return;
+    }
+    if (!description) {
+      setErrMsg("상세 내역을 입력해 주세요.");
+      return;
+    }
+    setErrMsg("");
+    try {
+      // "awards/수상 id" 엔드포인트로 PUT 요청함.
+      await Api.put(`award/fix/${currentAward.id}`, {
+        title,
+        description,
+      });
 
-    // "award/readAll" 엔드포인트로 GET 요청함.
-    console.log("Edit쪽")
-    const res = await Api.get("award/readAll");
-    // awards를 response의 data로 세팅함.
-    setAwards(res.data);
-    // 편집 과정이 끝났으므로, isEditing을 false로 세팅함.
-    setIsEditing(false);
+      // "award/readAll" 엔드포인트로 GET 요청함.
+      const res = await Api.get("award/readAll");
+      // awards를 response의 data로 세팅함.
+      setAwards(res.data);
+      // 편집 과정이 끝났으므로, isEditing을 false로 세팅함.
+      setIsEditing(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -49,6 +63,14 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
           onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Group>
+
+      <Col>
+        {errMsg && (
+          <Alert variant="info" className="pt-2 pb-2 mt-3 mb-4">
+            {errMsg}
+          </Alert>
+        )}
+      </Col>
 
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>
