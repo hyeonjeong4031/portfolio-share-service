@@ -56,7 +56,7 @@ certiRouter.put("/edit", login_required, async (req, res, next) => {
     const editCerti = await certiService.editCerti({user_id, toUpdate, id})
     
     // res.status(200).json("Hello");
-    res.status(200).json(editCerti);
+    res.status(201).json(editCerti);
   } catch (error) {
     next(error);
   }
@@ -73,7 +73,7 @@ certiRouter.delete("/delete/:id", login_required, async (req, res, next) => {
 
     const deleteResult = await certiService.deleteCerti({user_id, id})
     // res.status(200).json("hello") 
-    res.status(200).json(deleteResult);
+    res.status(201).json(deleteResult);
   } catch (error) {
     next(error);
   }
