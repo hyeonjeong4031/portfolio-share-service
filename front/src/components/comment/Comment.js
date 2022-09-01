@@ -11,7 +11,6 @@ function Comment({ key, comment, setComments, isEditable }) {
     <>
       {isEditing ? (
         <CommentEditForm
-          key={key}
           currentComment={comment}
           setComments={setComments}
           setIsEditing={setIsEditing}

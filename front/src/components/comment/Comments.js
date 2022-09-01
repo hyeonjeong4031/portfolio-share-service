@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
-import * as Api from "../../../api";
-import { UserStateContext } from "../../../App";
+import * as Api from "../../api";
+import { UserStateContext } from "../../App";
 import Comment from "./Comment";
 import CommentAddForm from "./CommentAddForm";
 
@@ -23,7 +23,7 @@ function Comments({ portfolioOwnerId }) {
   }
 
   return (
-    <Card>
+    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
       <Card.Body>
         <Card.Title className="text-start">방명록</Card.Title>
         {comments.map((comment) => (
@@ -34,12 +34,10 @@ function Comments({ portfolioOwnerId }) {
             isEditable={comment.writer_id === userState.user?.id}
           />
         ))}
-        {
-          <CommentAddForm
-            portfolioOwnerId={portfolioOwnerId}
-            setComments={setComments}
-          />
-        }
+        <CommentAddForm
+          portfolioOwnerId={portfolioOwnerId}
+          setComments={setComments}
+        />
       </Card.Body>
     </Card>
   );

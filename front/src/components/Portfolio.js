@@ -8,7 +8,7 @@ import Projects from "./projects/Projects";
 import Educations from "./educations/Educations";
 import Awards from "./award/Awards";
 import Certificates from "./Certificates/Certificates";
-import Comments from "./user/comment/Comments";
+import Comments from "./comment/Comments";
 
 function Portfolio() {
   const navigate = useNavigate();
