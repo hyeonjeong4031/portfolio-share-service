@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../../api";
+import { UserStateContext } from "../../../App";
 import Comment from "./Comment";
 import CommentAddForm from "./CommentAddForm";
 
-function Comments({ portfolioOwnerId, userState }) {
+function Comments({ portfolioOwnerId }) {
   const [comments, setComments] = useState([]);
+  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+  const userState = useContext(UserStateContext);
 
-  
   useEffect(() => {
     // GET 요청, 세팅
-    Api.get("comment/readComment", portfolioOwnerId).then((res) => setComments(res.data));
+    Api.get("comment/readComment", portfolioOwnerId).then((res) => {
+      setComments(res.data);
+      setIsFetchCompleted(true);
+    });
   }, [portfolioOwnerId]);
-  
+
+  if (!isFetchCompleted) {
+    return "loading...";
+  }
 
   return (
     <Card>

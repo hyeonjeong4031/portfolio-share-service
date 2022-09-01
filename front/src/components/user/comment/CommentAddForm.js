@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../../api";
 
-function CommentAddForm({ portfolioOwnerId, setComments}) {
+function CommentAddForm({ portfolioOwnerId, setComments }) {
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState("");
 
@@ -14,9 +14,10 @@ function CommentAddForm({ portfolioOwnerId, setComments}) {
     await Api.post(`comment/add/${portfolioOwnerId}`, { description });
 
     // GET 요청, 세팅
-    const res= await Api.get(`comment/readComment/${portfolioOwnerId}`);
+    const res = await Api.get("comment/readComment", portfolioOwnerId);
+    console.log(res);
     setComments(res.data);
-    };
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
