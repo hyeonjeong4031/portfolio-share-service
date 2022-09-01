@@ -9,24 +9,35 @@ class Comment {
   }
 
 
-  static async findByCommentedID({commentedID}){
-    const award_this = await CommentModel.find({commentedID});
-    return award_this;
+
+  static async findByCommentedID({currentPageUserID}){
+    console.log(currentPageUserID)
+    const comment_this = await CommentModel.find({commentedID : currentPageUserID});
+    return comment_this;
   }
 
-//   static async fixOneAward({filter, data}){
-//     console.log(filter)
-//     console.log(data)
-//     const fixedAward = await AwardModel.updateOne({id : filter}, data)
-//     console.log(fixedAward)
-//     return fixedAward
-//   }
-//   static async deleteOneAward({awardID}){
-//     console.log('deleteOne 작동')
-//     const deleteAward = await AwardModel.deleteOne({id:awardID})
-//     console.log(deleteAward)
-//     return deleteAward
-//   }
+  static async findByID({commentID}){
+    console.log('model에 값 전달 확인',commentID)
+    const comment_this = await CommentModel.findOne({
+      id : commentID});
+    return comment_this;
+  }
+
+  static async fixOneComment({commentID, fixedData}){
+    console.log('방명록 수정 model')
+    console.log(commentID, "COMMENTID")
+    console.log(fixedData, "DATA!!!!!!!!!!")
+    const comment_this = await CommentModel.updateOne({id : commentID}, fixedData)
+    return comment_this
+  }
+
+  static async deleteOneComment(commentID){
+    console.log('delet 모데ㄹ', commentID)
+    const comment_this = await CommentModel.deleteOne({id : commentID});
+    return comment_this
+  }
+
+
 }
 
 export { Comment };

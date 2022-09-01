@@ -50,8 +50,8 @@ router.get('/readAll', login_required, async(req,res,next)=>{
 })
 
 
-router.get('/readAll/:id', async(req,res,next)=>{
-    //그냥 id값을 통해 데이터를 넘겨주는 것은 굳이 id가 필요한가 싶어서 그냥 login_required제거
+router.get('/readAll/:id', login_required, async(req,res,next)=>{
+    //id는 url에서 받아오지만 로그인 하지 않은 사용자가 요청하면 안될거 같아서 login_required를 제거하지 않음
     try{
         console.log('네트워크 - 다른 유저 award 읽어오기')
         const user_id = req.params.id; //사용자의 아이디를 url에서 받아옴

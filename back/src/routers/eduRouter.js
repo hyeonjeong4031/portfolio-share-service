@@ -118,6 +118,7 @@ eduRouter.get(
 
       const edu = await eduService.getEduNet({id});
 
+
       res.status(201).json(edu);
     } catch (error) {
       next(error);
@@ -127,3 +128,4 @@ eduRouter.get(
 
 
 export { eduRouter };
+

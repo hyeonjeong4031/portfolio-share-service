@@ -9,11 +9,16 @@ class commentService {
 
         if(!writerUserID){
             const errorMessage="작성자 값이 전달되지 않았습니다"
+
+            return {errorMessage}
         } else if(!commentedID){
             const errorMessage="방명록이 달린 사용자가 전달되지 않았습니다"
+            return {errorMessage}
         } else if(!description){
             const errorMessage="내용이 전달되지 않았습니다"
-        }
+            return {errorMessage}
+
+        } 
         const newComment = {
             id ,
             commentedID,
@@ -25,7 +30,46 @@ class commentService {
         createNewComment.errorMessage=null;
         return createNewComment
     }
+
+
+    static async readComment({currentPageUserID}){
+        console.log('comment Service [readComment] Function start');
+ 
+        const currentResult = await Comment.findByCommentedID({currentPageUserID })
+        currentResult.errorMessage=null;
+        return currentResult
+    }
+
+    static async findCommentByCommentID({commentID}){
+        console.log('find Comment ID')
+        
+        const result = await Comment.findByID({commentID})
+        console.log('서비스 단에서의 return 값',result)
+        if(result == null){
+            console.log('result의 값이 없음')
+            const errorMessage = "해당 댓글은 존재하지 않습니다"
+            return {errorMessage}
+        }
+        result.errorMessage = null
+        return result
+    }
     
+    static async fixComment({commentID, fixedDescription}){
+        console.log('commet 수정 요청까지 들어감');
+        const fixedData = {
+            description : fixedDescription
+        }
+        const result = await Comment.fixOneComment({commentID, fixedData})
+        result.errorMessage = null
+        return result
+
+    }
+
+    static async deleteComment(commentID){
+        console.log('comment SErvice Delete >>>', commentID)
+        const result = await Comment.deleteOneComment(commentID);
+        return result
+    }
 }
 
 export {commentService}
