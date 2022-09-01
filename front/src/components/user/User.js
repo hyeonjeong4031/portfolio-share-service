@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import UserEditForm from "./UserEditForm";
 import UserCard from "./UserCard";
 import * as Api from "../../api";
+import Comments from "./comment/Comments"
 
-function User({ portfolioOwnerId, isEditable }) {
+function User({ portfolioOwnerId, isEditable, userState }) {
   // useState 훅을 통해 isEditing 상태를 생성함.
   const [isEditing, setIsEditing] = useState(false);
   // useState 훅을 통해 user 상태를 생성함.
@@ -29,6 +30,10 @@ function User({ portfolioOwnerId, isEditable }) {
           isEditable={isEditable}
         />
       )}
+      {<Comments
+        portfolioOwnerId={portfolioOwnerId}
+        userState={userState}
+      />}
     </>
   );
 }
