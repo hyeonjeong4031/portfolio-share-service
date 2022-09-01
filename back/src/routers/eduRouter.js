@@ -50,7 +50,7 @@ eduRouter.get(
 
       const edu = await eduService.getEduinfo({ user_id });
 
-      res.status(201).json(edu);
+      res.status(200).json(edu);
     } catch (error) {
       next(error);
     }
@@ -80,7 +80,7 @@ eduRouter.put("/:id", login_required, async function (req, res, next) {
       throw new Error(updateEdu.errorMessage);
     }
 
-    res.status(200).json(updateEdu);
+    res.status(201).json(updateEdu);
   } catch (error) {
     next(error);
   }
@@ -98,13 +98,12 @@ eduRouter.delete(
       //list는 delete 후 남은 list를 res해주면 된다
       // const edu = await eduService.getEduinfo({ user_id });
 
-      res.status(200).json(deleteOne);
+      res.status(201).json(deleteOne);
     } catch (error) {
       next(error);
     }
   }
 );
-
 
 // 5. 네트워크 학력정보 조회 라우터
 eduRouter.get(
@@ -116,16 +115,13 @@ eduRouter.get(
       console.log(id);
       // 네트워크 타인 페이지 들어가서 req.body 로
 
-      const edu = await eduService.getEduNet({id});
+      const edu = await eduService.getEduNet({ id });
 
-
-      res.status(201).json(edu);
+      res.status(200).json(edu);
     } catch (error) {
       next(error);
     }
   }
 );
 
-
 export { eduRouter };
-

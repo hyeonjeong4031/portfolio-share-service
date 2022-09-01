@@ -103,7 +103,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
           type="file"
           name="image"
           onChange={validateFile}
-          accept="image/png, image/jpeg"
+          accept="image/png, image/jpg"
         />
       </Form.Group>
       <Form.Group className="mt-3" as={Row} controlId="projectAddDate">
