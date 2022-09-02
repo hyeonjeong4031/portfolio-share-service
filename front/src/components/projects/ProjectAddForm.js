@@ -18,8 +18,8 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   // 파일 사이즈 제한(2MB) 검증
   const validateFile = (e) => {
     const newImageFile = e.target.files[0];
-    if (newImageFile && newImageFile.size > 1000 * 2000) {
-      setErrMsg("파일 크기는 2MB를 넘을 수 없습니다.");
+    if (newImageFile && newImageFile.size > 1000 * 20000) {
+      setErrMsg("파일 크기는 20MB를 넘을 수 없습니다.");
       e.target.value = "";
     } else {
       setErrMsg("");
