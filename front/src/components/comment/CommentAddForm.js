@@ -12,6 +12,7 @@ function CommentAddForm({ portfolioOwnerId, setComments }) {
 
     // POST 요청
     await Api.post(`comment/add/${portfolioOwnerId}`, { description });
+    setDescription("");
 
     // GET 요청, 세팅
     const res = await Api.get("comment/readComment", portfolioOwnerId);
