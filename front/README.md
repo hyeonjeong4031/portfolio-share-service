@@ -1,48 +1,47 @@
-# 포트폴리오 공유 서비스 프론트엔드 코드
+### **1. 기본 MVP (Project/Award/Education/Certificate) CRUD 기능 구현**
 
-## 실행 방법
+- Create
+    - 확인 버튼 클릭 시 `POST` api 요청 후 `GET` 요청으로 데이터 세팅
+- Read
+    - `useEffect` 함수 내에서 `GET` api 요청으로 데이터 세팅
+- Update
+    - 확인 버튼 클릭 시 시 `PUT` api 요청 후 `GET` 요청으로 데이터 세팅
+- Delete
+    - 삭제 버튼 클릭 시 `DELETE` api 요청 후 남은 데이터들을 `response`로 반환받아 `state` 세팅함수로 데이터 세팅
 
-## 1. react-srcipts start 실행
+### 2. 기능추가
 
-> yarn은 사실 npm 패키지입니다. yarn부터 설치합니다. (이미 설치 시 생략)
+1. 프로젝트 이미지 업로드
+    - Input type을 file로 설정하여 파일을 입력받음.
+    - `form-data` 형태로 변수 생성 후 이미지 파일 담음.
+    - `project.id`를 `endpoint`에 담아 `PUT` api로 전송
+2. 방명록
+    - `portfolioOwnerId` 및 `GET` api를 통해 해당 포트폴리오 유저의 댓글 목록을 받아옴.
+    - comment객체 내의 id값으로 작성자 정보를 받아와 유저 name 출력
+    - userContext를 사용해 현재 유저 정보를 확인하고, 코멘트 작성자 id와 동일한지 확인하여 편집 기능 출력 조건화
+    
+    ```jsx
+    (comment.writer_id === userState.user?.id)
+    ```
+    
 
-> 이후, 아래 yarn 커맨드는, yarn install 커맨드의 단축키입니다. 즉, 라이브러리 설치 커맨드입니다.
+### 3. 기능개선
 
-> yarn 입력 시 자동으로, package.json 바탕으로 라이브러리를 한꺼번에 설치해 줍니다.
-
-```bash
-npm install --global yarn
-yarn
-yarn start
-```
-
-## 파일 구조 설명
-
-1. src폴더는 아래와 같이 구성됩니다.
-
-- components 폴더:
-
-  - Header.js: 네비게이션 바
-  - Porfolio.js: 메인 화면을 구성하는, 5개 MVP를 모두 포함하는 컴포넌트
-    - **현재는 User MVP만 포함**되어 있습니다.
-  - award 폴더: 포트폴리오 중 수상이력 관련 컴포넌트들 -> **현재 없습니다.**
-  - certificate 폴더: 포트폴리오 중 자격증 관련 컴포넌트들 -> **현재 없습니다.**
-  - education 폴더: 포트폴리오 중 학력 관련 컴포넌트들 -> **현재 없습니다.**
-  - project 폴더: 포트폴리오 중 프로젝트 관련 컴포넌트들 -> **현재 없습니다.**
-  - user 폴더: 포트폴리오 중 사용자 관련 컴포넌트들
-
-- api.js:
-  - axios를 사용하는 코드가 있습니다.
-  - delete 함수는 코드는 작성되어 있지만, 쓰이지고 있지는 않습니다. -> **사용하는 기능을 추가해 보세요!**
-- App.js:
-  - SPA 라우팅 코드가 있습니다.
-- reducer.js:
-  - 로그인, 로그아웃은 useReducer 훅으로 구현되는데, 이 때 사용되는 reducer 함수입니다.
-
-2. 전체적인 로직은 아래와 같습니다. 예를 들어 Award MVP 기준입니다 (**물론 현재는 코드는 없습니다. 여러분들이 개발해야 하기 때문입니다. 우선 로직만 참고해 주세요. 나머지 MVP도 비슷합니다**)
-
-- 포트폴리오 컴포넌트는 Awards 컴포넌트를 사용함.
-- Awards는 수상이력 **목록**으로, 여러 개의 Award 컴포넌트+ (추가하기 버튼 클릭 시) AwardAddForm 컴포넌트로 구성됩니다.
-- 각 Award 컴포넌트는 **isEditing 상태에 따라**, false면 AwardCard, true면 AwardEditForm이 됩니다.
-- **isEditable**(포트폴리오 소유자와 현재 로그인한 사용자가 일치할 때)이 true인 경우 편집 버튼이 생깁니다.
-- Awards는 **isAdding**이 true면 AwardAddForm, false면 그냥 Award들의 모음이 됩니다.
+1. 회원 탈퇴 기능 
+    - `withrawal` 값이 `true`일 경우
+        - 네트워크 페이지에서 해당 계정의 포트폴리오 열람 불가
+2. 유저 이메일 변경 제한
+    - 프로필 편집 시 이메일 중복 방지를 위해 `props`에 `plaintext readOnly`를 작성하여 읽기전용으로 설정
+3. 에러 메세지 추가
+    
+    1) 로그인 시 계정 유효 여부 검사
+    
+    - 로그인 api 요청 시 err가 발생할 경우 state 세팅 함수로 에러메세지 설정 및 출력
+    
+    2) 회원가입 시 이메일 중복 오류 메세지
+    
+    - api 요청 시 이미 존재하는 이메일일 경우 에러를 반환받고, 에러를 반환받았을 경우 state 세팅함수로 에러메세지 세팅 및 출력
+    
+    3) MVP에서 입력 시 빈칸 여부 검사
+    
+    - title, descripton 등 해당 `state` 값이 존재하지 않을 경우 `setErrMsg` 세팅함수로 에러메세지 설정 및 출력

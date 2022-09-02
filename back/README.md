@@ -1,73 +1,48 @@
-# 포트폴리오 공유 서비스 백엔드 코드
+**1. 기본 MVP (Project/Award/Education/Certificate) CRUD 기능 구현** 
 
-## 실행 방법
+- 3계층 구조의 로직 설계
+    - Control layer - Router
+        - express를 이용한 라우팅
+    - Service layer - Logic
+        - 해당 라우터에 접근한 요청에 Logic을 적용
+    - Model layer
+        - Add, Get, Put,  Delete method를 이용하여 Database 접근
+        
 
-## 1. Mongodb 서버 구축 (a, b 중 선택)
+### 2. 기능추가
 
-### a. 로컬 서버
+1. Project image Upload 
+    - 파일 데이터를 다루기 위한 **multer module** 사용
+    - 이미지 파일 업로드만 허용하기 위해 multer option 적용하여 이미지 파일 확장자명(jpg/png), 이미지 파일 용량(20MB) 제한
+    - 이미지 파일 GET 요청에는 응답의 content-type을 image/jpg로 지정하여 해당 API가 바로 이미지를 받을 수 있도록 함
+    - 실제 서비스들과 마찬가지로 개인 로컬 컴퓨터가 아닌 몽고디비 서버에 이미지 데이터를 넣기 위해 Project Schema에 image field 추가  {”type” : buffer }
+        - 이미지 데이터를 몽고디비에 바로 저장할 수 있는 데이터 타입이 없어서 이미지를 binary data로 저장하기 위함
+    - 프론트엔드에서 json이 아닌 form-data 형식으로 이미지 파일을 받아 multer 패키지로 받은 이미지 파일을 다룸
+        - req.file.buffer로 이미지 파일을 받아 데이터 베이스에 저장
+        - 이미지는 json string 형식으로 주고 받기가 어려워서 form-data와 multer 패키지 이용
+    - 이미지 GET 요청에는 response를 content-type: image/json 형식으로 하여 DB에서 해당 document의 binary image data 자체를 res.send로 전송
+        - 해당 get 요청의 url 자체가 이미지 응답이 되어 전송
+        - 프론트 엔드에서 <img src="url"/>로 이미지를 받음
 
-아래 공식 문서 참조 \
-https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/ \
-`mongosh` 커맨드로 서버가 들어가지면 성공적으로 구축된 것입니다. \
+1. 방명록
+    - req.params.id를 통해 특정 포트폴리오의 방명록을 불러옴
+    - req.currentUserId를 통해 작성자의 정보를 확인
+    - 작성자의 방명록 수정 & 삭제 권한
+        - 댓글을 작성할 때 토큰의 페이로드에 있는 아이디 정보를 writer_id로 저장해둠. 이후 해당 댓글 수정 및 삭제
+    
 
-### b. Atlas 서버
+### 3. 기능개선
 
-아래 링크 가입 -> 무료 클러스터 생성 (512MB) \
-https://www.mongodb.com/atlas \
-왼쪽 아래 SECURITY 의 Database Access -> Add New User -> name, password 설정 \
-왼쪽 아래 SECURITY 의 Network Access -> Add IP Address -> current IP 등록 \
-왼쪽 위 DEPLOYMENT Databases -> Connect -> Connect your application -> 서버 링크 복사
-
-> Atlas 관련 상세 매뉴얼은 프로젝트 가이드의 "MongoDB 데이터베이스 구축하기"에 있습니다.
-
-## 2. Mongodb 서버 url 환경변수에 등록
-
-./.env 파일 수정 \
-MONGODB_URL을 위에서 만든 mongodb 서버 링크로 설정
-
-```bash
-MONGODB_URL="mongodb://localhost:27017/myDB"  (로컬 서버의 경우 예시)
-MONGODB_URL="mongodb+srv://<name>:<password>@cluster0.acaph.mongodb.net/myDB?retryWrites=true&w=majority" (Atlas 서버의 경우 예시)
-```
-
-> Atlas 서버의 경우 <name>, <password>를 위에서 설정했던 name, password로 바꾸어 주세요.
-
-## 3. Express 실행
-
-> yarn은 사실 npm 패키지입니다. yarn부터 설치합니다. (이미 설치 시 생략)
-
-> 이후, 아래 yarn 커맨드는, yarn install 커맨드의 단축키입니다. 즉, 라이브러리 설치 커맨드입니다.
-
-> yarn 입력 시 자동으로, package.json 바탕으로 라이브러리를 한꺼번에 설치해 줍니다.
-
-```bash
-npm install --global yarn
-yarn
-yarn start
-```
-
-<hr />
-
-## 파일 구조 설명
-
-1. src폴더는 크게는 routers, services, db의 3개 폴더로 구분됩니다.
-**현재는 User MVP 코드만 있습니다.**
-
-- routers:
-  - request와 response가 처리됩니다. MVP 별로 1개씩, 총 5개 파일이 있게 됩니다.
-  - 현재는 User MVP 파일만 있습니다.
-- services:
-  - 백엔드 로직 코드가 있습니다. MVP 별로 1개씩, 총 5개 파일이 있게 됩니다.
-  - 현재는 User MVP 파일만 있습니다.
-- db:
-  - Mongoose와 mongodb 서버를 연결하는 코드가 있는 index.js
-  - Mongoose 스키마가 있는 schemas 폴더,
-    - MVP 별로 5개 파일이 있어야 하며, 현재는 User MVP 파일만 있습니다.
-  - Mongoose 모델 ORM 코드가 있는 models 폴더
-    - MVP 별로 5개 파일이 있어야 하며, 현재는 User MVP 파일만 있습니다.
-
-2. 이외 폴더는 아래와 같습니다.
-
-- src/middlewares:
-  - jwt토큰을 다루는 미들웨어인 login_required.js
-  - 학습 편의를 위해 일괄 http 400 코드로 에러를 변환하는 에러핸들러인 errorMiddleware.js
+1. Withdrawal
+    - 탈퇴를 진행하였을 때,  user Schema에 withrawal값을 추가해
+    회원 정보를 delete하는 대신 put을 사용하여 boolean type으로 데이터 관리 
+    ( ”withrawal” : true 면 탈퇴한 상태로 간주)
+    - “withrawal” : true
+        - login 시 “존재하지 않는 계정입니다.” 메세지 리턴
+        - 회원가입시 탈퇴한 계정과 동일한 email을 사용하여도 email 중복 오류 메세지가 뜨지 않음.
+    - 동일한 email이 여러개이면 가장 최신의 email withrawal값을 참조하여 회원 탈퇴 여부 파악
+    - 관리자 문의를 통해 탈퇴한 회원 계정 및 데이터 복원 가능.
+2. MVP Delete
+    - 해당하는 document id를 request.params로 받아와 Delete 메소드를 사용하여 구현
+3. Update & Delete 시 Authentication 강화 
+    - Update 및 Delete 수행 전에 현재 토큰의 유저 정보와 변경하고자 하는 document의 유저 정보를 비교하여 일치하지 않으면 오류 반환
