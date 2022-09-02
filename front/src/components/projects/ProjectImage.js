@@ -5,14 +5,15 @@ function ProjectImage({ project }) {
   return (
     <img
       src={
-        window.location.href +
+        "http://" +
+        window.location.hostname +
+        ":" +
         backendPortNumber +
-        "project/" +
+        "/project/" +
         project.id +
         "/image"
       }
-      min-width="350px"
-      max-width="100%"
+      width="80%"
     />
   );
 }
