@@ -7,7 +7,7 @@
 - Update
     - 확인 버튼 클릭 시 시 `PUT` api 요청 후 `GET` 요청으로 데이터 세팅
 - Delete
-    - 삭제 버튼 클릭 시 `DELETE` api 요청 후 남은 데이터들을 `response`로 반환받아 `state` 세팅함수로 데이터 세팅
+    - 삭제 버튼 클릭 시 `DELETE` api 요청 후 남은 데이터들을 `response`로 반환받아 `state` 세팅함수로 데이터 세팅 
 
 ### 2. 기능추가
 
