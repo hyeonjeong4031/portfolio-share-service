@@ -67,7 +67,7 @@ function Project({ project, setProjects, isEditable, setIsEditing }) {
       <Collapse in={tapOpen}>
         <div>
           {project.image && (
-            <div className="mt-3 mb-3 text-center">
+            <div className="mt-3 mb-3">
               <ProjectImage project={project} />
             </div>
           )}

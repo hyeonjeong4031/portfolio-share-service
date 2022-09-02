@@ -1,15 +1,19 @@
 import React from "react";
+import { backendPortNumber } from "../../api";
 
 function ProjectImage({ project }) {
   return (
     <img
       src={
-        "http://kdt-ai5-team07.elicecoding.com:5001/project/" +
+        "http://" +
+        window.location.hostname +
+        ":" +
+        backendPortNumber +
+        "/project/" +
         project.id +
         "/image"
       }
-      min-width="350px"
-      max-width="100%"
+      width="80%"
     />
   );
 }

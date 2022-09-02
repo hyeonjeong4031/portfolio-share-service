@@ -26,19 +26,20 @@ function CommentCard({ comment, setComments, isEditable, setIsEditing }) {
     }
   };
 
+  const setWirterName = (name) => {
+    return name.length > 15 ? name.substring(0, 15) + ".." : name;
+  };
+
   if (isLoading) return "Loading...";
 
   return (
     <Card.Text>
-      <Row className="align-items-center">
-        <Col md="7">
-          <span style={{ display: "inline-block", width: "60px" }}>
-            <strong>{writer.name}</strong>
-          </span>
-          <span className="text-muted">{comment.description}</span>
-        </Col>
-        <Col className="text-end">
-          {isEditable && (
+      <Col>
+        <strong>{setWirterName(writer.name)}</strong>
+        <Col className="text-muted">{comment.description}</Col>
+
+        {isEditable && (
+          <Col className="text-end">
             <span
               style={{
                 fontSize: "14px",
@@ -55,8 +56,6 @@ function CommentCard({ comment, setComments, isEditable, setIsEditing }) {
               </a>
               {"  "}
             </span>
-          )}
-          {isEditable && (
             <span
               style={{
                 fontSize: "14px",
@@ -66,9 +65,9 @@ function CommentCard({ comment, setComments, isEditable, setIsEditing }) {
             >
               <a onClick={() => commentDelete()}>삭제</a>
             </span>
-          )}
-        </Col>
-      </Row>
+          </Col>
+        )}
+      </Col>
     </Card.Text>
   );
 }
