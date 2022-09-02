@@ -1,9 +1,16 @@
 import React from "react";
+import { backendPortNumber } from "../../api";
 
 function ProjectImage({ project }) {
   return (
     <img
-      src={"http://localhost:5001/project/" + project.id + "/image"}
+      src={
+        window.location.href +
+        backendPortNumber +
+        "project/" +
+        project.id +
+        "/image"
+      }
       min-width="350px"
       max-width="100%"
     />
