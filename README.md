@@ -21,9 +21,9 @@
 
 1. 프론트엔드
 
-- React
-- React Bootstrap
-- axios
+- React.js
+- Bootstrap
+- React Hooks
 
 2. 백엔드
 
